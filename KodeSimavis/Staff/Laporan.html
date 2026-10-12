@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIMAVIS - Laporan Pendapatan Harian</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font: Instrument Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Mencegah scrollbar utama browser */
+    }
+    
+    /* Custom Scrollbar halus untuk area data */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex h-screen w-screen overflow-hidden">
+
+  <!-- ================= SIDEBAR (TETAP / FIXED) ================= -->
+  <aside class="w-[260px] h-full flex-shrink-0 p-5 pt-8 pb-8 flex flex-col justify-between items-start border-r border-[#164E63]"
+         style="background: linear-gradient(180deg, #0F597A 0%, #0A4061 60%, #082E4D 100%);">
+    
+    <!-- Top Section (Logo & Menu) -->
+    <div class="w-full flex flex-col justify-start items-start gap-8">
+      <!-- Logo Brand -->
+      <div class="flex justify-start items-center gap-3">
+        <img class="w-10 h-10 rounded-lg" src="https://placehold.co/40x40" alt="Logo" />
+        <div class="flex flex-col justify-start items-start gap-0.5">
+          <div class="text-white text-base font-bold">SIMAVIS</div>
+          <div class="text-[#6C6287] text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="w-full flex flex-col gap-2">
+        <a href="index.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[14.25px] absolute left-[2.25px] top-[1.5px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Dashboard SIMAVIS</span>
+        </a>
+
+        <a href="transaksi.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[12px] h-[15px] absolute left-[3px] top-[1.5px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Transaksi</span>
+          <span class="px-1.5 py-0.5 bg-[#F0EDFF] rounded-md text-[#8A72F1] text-[11px] font-bold">12</span>
+        </a>
+
+        <a href="pembayaran.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[13.5px] absolute left-[2.25px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Pembayaran</span>
+        </a>
+
+        <a href="galeri.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[13.5px] absolute left-[2.25px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Galeri & QR</span>
+        </a>
+
+        <a href="pelanggan.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[15px] h-[13.5px] absolute left-[1.5px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Pelanggan</span>
+        </a>
+
+        <!-- Active Menu: Laporan -->
+        <a href="#" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[10.5px] h-[13.5px] absolute left-[3.75px] top-[2.25px] outline outline-2 outline-white -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Laporan</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom User Profile Card -->
+    <div class="w-full p-3 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-start items-center gap-3">
+      <img class="w-9 h-9 rounded-xl flex-shrink-0" src="https://placehold.co/36x36" alt="User Profile" />
+      <div class="flex-1 flex flex-col justify-start items-start gap-0.5 min-w-0">
+        <div class="text-white/90 text-xs font-semibold truncate w-full">Dimas Prayoga</div>
+        <div class="text-white/50 text-[11px] font-normal truncate w-full">Admin Utama</div>
+      </div>
+      <div class="w-4 h-4 relative overflow-hidden flex-shrink-0">
+        <div class="w-3 h-3 absolute left-[2px] top-[2px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT AREA ================= -->
+  <main class="flex-1 h-full flex flex-col min-w-0 overflow-hidden bg-white">
+    
+    <!-- HEADER (TETAP DI ATAS / FIXED) -->
+    <header class="w-full px-10 pt-8 pb-4 flex justify-between items-center border-b border-gray-100 flex-shrink-0 bg-white">
+      <div class="flex flex-col justify-start items-start gap-1">
+        <h1 class="text-[#2B2544] text-2xl lg:text-3xl font-bold">Laporan Pendapatan Harian</h1>
+        <p class="text-[#6C6287] text-sm font-normal">Analisis kinerja harian metode pembayaran</p>
+      </div>
+
+      <div class="flex justify-start items-center gap-3">
+        <div class="px-4 py-2 bg-white shadow-sm rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex justify-start items-center gap-2">
+          <div class="w-4 h-4 relative overflow-hidden">
+            <div class="w-3 h-[13.33px] absolute left-[2px] top-[1.33px] outline outline-2 outline-[#6366F1] -outline-offset-1"></div>
+          </div>
+          <span class="text-[#2B2544] text-xs font-semibold">Hari Ini: 14 Okt 2024</span>
+        </div>
+
+        <button class="w-10 h-10 bg-white shadow-sm rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex justify-center items-center">
+          <div class="w-[18px] h-[18px] relative overflow-hidden">
+            <div class="w-[13.5px] h-[15px] absolute left-[2.25px] top-[1.5px] outline outline-2 outline-[#2B2544] -outline-offset-1"></div>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <!-- AREA KONTEN UTAMA (BISA DI-SCROLL) -->
+    <div class="flex-1 overflow-y-auto px-10 py-6 flex flex-col gap-6 custom-scrollbar">
+      
+      <!-- REPORT CONTROL BAR -->
+      <section class="p-4 bg-white shadow-md rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="w-4.5 h-4.5 relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[15px] absolute left-[2.25px] top-[1.5px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+          </div>
+          <span class="text-[#2B2544] text-sm font-bold">Tanggal Laporan: 14 Oktober 2024</span>
+        </div>
+
+        <button class="px-4 py-2 bg-[#0891B2]/13 hover:bg-[#0891B2]/20 transition-colors rounded-xl flex items-center gap-2 text-[#0891B2] text-xs font-bold">
+          <div class="w-3.5 h-3.5 relative overflow-hidden flex-shrink-0">
+            <div class="w-[11.67px] h-[11.67px] absolute left-[1.17px] top-[1.17px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+          </div>
+          <span>Cetak Rekap Harian</span>
+        </button>
+      </section>
+
+      <!-- STATS CARDS ROW -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Card 1: Total Transaksi -->
+        <div class="p-4 bg-gradient-to-br from-white/72 to-white/78 backdrop-blur-md shadow-md rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex flex-col gap-2">
+          <span class="text-[#6C6287] text-xs font-semibold">Total Transaksi</span>
+          <div class="flex items-center gap-2.5">
+            <div class="w-4 h-4 relative overflow-hidden flex-shrink-0">
+              <div class="w-[10.67px] h-[13.33px] absolute left-[2.67px] top-[1.33px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+            </div>
+            <span class="text-[#2B2544] text-lg font-bold">15 Transaksi</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Total Pendapatan -->
+        <div class="p-4 bg-gradient-to-br from-white/72 to-white/78 backdrop-blur-md shadow-md rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex flex-col gap-2">
+          <span class="text-[#6C6287] text-xs font-semibold">Total Pendapatan</span>
+          <div class="flex items-center gap-2.5">
+            <div class="w-4 h-4 relative overflow-hidden flex-shrink-0">
+              <div class="w-[13.33px] h-[6.67px] absolute left-[1.33px] top-[4.67px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+            </div>
+            <span class="text-[#2B2544] text-lg font-bold">Rp 6.200.000</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Pembayaran QRIS -->
+        <div class="p-4 bg-gradient-to-br from-white/72 to-white/78 backdrop-blur-md shadow-md rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex flex-col gap-2">
+          <span class="text-[#6C6287] text-xs font-semibold">Pembayaran QRIS</span>
+          <div class="flex items-center gap-2.5">
+            <div class="w-4 h-4 relative overflow-hidden flex-shrink-0">
+              <div class="w-3 h-3 absolute left-[2px] top-[2px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+            </div>
+            <span class="text-[#2B2544] text-lg font-bold">Rp 3.800.000</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Pembayaran Cash -->
+        <div class="p-4 bg-gradient-to-br from-white/72 to-white/78 backdrop-blur-md shadow-md rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex flex-col gap-2">
+          <span class="text-[#6C6287] text-xs font-semibold">Pembayaran Cash</span>
+          <div class="flex items-center gap-2.5">
+            <div class="w-4 h-4 relative overflow-hidden flex-shrink-0">
+              <div class="w-[13.33px] h-2 absolute left-[1.33px] top-[4px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+            </div>
+            <span class="text-[#2B2544] text-lg font-bold">Rp 2.400.000</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- BOTTOM SECTION: METHOD COMPARISON & RECAP TABLE -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-6">
+        
+        <!-- KOMPARASI METODE PEMBAYARAN (5 COLS) -->
+        <div class="lg:col-span-5 p-6 bg-white shadow-md rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-5">
+          <h2 class="text-[#2B2544] text-sm font-bold">Komparasi Metode Pembayaran (Hari Ini)</h2>
+
+          <div class="pt-3 flex flex-col gap-6">
+            <!-- QRIS Bar -->
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between items-start text-xs">
+                <span class="text-[#2B2544] font-semibold">QRIS E-Wallet (61.3%)</span>
+                <span class="text-[#0891B2] font-bold">Rp 3.800.000</span>
+              </div>
+              <div class="w-full h-4 bg-[#FAF9F6] rounded-lg overflow-hidden flex">
+                <div class="w-[61.3%] h-full bg-[#0891B2] rounded-lg"></div>
+              </div>
+            </div>
+
+            <!-- Cash Bar -->
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between items-start text-xs">
+                <span class="text-[#2B2544] font-semibold">Tunai / Cash (38.7%)</span>
+                <span class="text-[#0891B2] font-bold">Rp 2.400.000</span>
+              </div>
+              <div class="w-full h-4 bg-[#FAF9F6] rounded-lg overflow-hidden flex">
+                <div class="w-[38.7%] h-full bg-[#0891B2] rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REKAPITULASI TRANSAKSI CETAK (7 COLS) -->
+        <div class="lg:col-span-7 p-6 bg-white shadow-md rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4 overflow-x-auto custom-scrollbar">
+          <h2 class="text-[#2B2544] text-sm font-bold">Rekapitulasi Transaksi Cetak</h2>
+
+          <div class="w-full min-w-[500px] flex flex-col">
+            <!-- Table Header -->
+            <div class="w-full px-3 py-2.5 bg-[#F3F0FA] rounded-lg flex justify-start items-center text-[#6C6287] text-xs font-semibold">
+              <div class="w-[120px]">ID Transaksi</div>
+              <div class="flex-1">Pelanggan</div>
+              <div class="w-[140px]">Paket</div>
+              <div class="w-[80px]">Metode</div>
+              <div class="w-[100px] text-right">Total</div>
+            </div>
+
+            <!-- Row 1 -->
+            <div class="w-full p-3 bg-[#F8FBFF] border-b border-[#EAE6FA] flex justify-start items-center text-xs">
+              <div class="w-[120px] text-[#0891B2] font-bold">LL-2024-001</div>
+              <div class="flex-1 text-[#2B2544] font-semibold truncate">Andi Pratama</div>
+              <div class="w-[140px] text-[#6C6287]">Studio Portrait</div>
+              <div class="w-[80px] text-[#6C6287]">QRIS</div>
+              <div class="w-[100px] text-right text-[#2B2544] font-semibold">Rp 750.000</div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="w-full p-3 bg-[#F8FBFF] border-b border-[#EAE6FA] flex justify-start items-center text-xs">
+              <div class="w-[120px] text-[#0891B2] font-bold">LL-2024-002</div>
+              <div class="flex-1 text-[#2B2544] font-semibold truncate">Rina Wijaya</div>
+              <div class="w-[140px] text-[#6C6287]">Wisuda</div>
+              <div class="w-[80px] text-[#6C6287]">Cash</div>
+              <div class="w-[100px] text-right text-[#2B2544] font-semibold">Rp 1.200.000</div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="w-full p-3 border-b border-[#EAE6FA] flex justify-start items-center text-xs">
+              <div class="w-[120px] text-[#0891B2] font-bold">LL-2024-005</div>
+              <div class="flex-1 text-[#2B2544] font-semibold truncate">Budi Santoso</div>
+              <div class="w-[140px] text-[#6C6287]">Wedding</div>
+              <div class="w-[80px] text-[#6C6287]">QRIS</div>
+              <div class="w-[100px] text-right text-[#2B2544] font-semibold">Rp 4.500.000</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+</body>
+</html>

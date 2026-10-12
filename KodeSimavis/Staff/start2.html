@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMAVIS - Loading Screen</title>
+    <!-- Memuat Google Fonts agar tipe huruf sama persis seperti di Figma -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@500&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Mengunci frame layar penuh tanpa scrollbar */
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Kontainer Utama Gradient */
+        .loading-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, #0C4A6E 0%, #164E63 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 20px 60px 20px;
+        }
+
+        /* Pembungkus Konten Tengah */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 48px;
+            width: 100%;
+        }
+
+        /* Kotak Logo Huruf S */
+        .logo-box {
+            width: 200px;
+            height: 200px;
+            background-color: white; /* Mengubah placeholder menjadi warna putih solid */
+            box-shadow: 0px 12px 24px rgba(8, 145, 178, 0.25);
+            border-radius: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-initial {
+            color: #0891B2;
+            font-size: 100px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* Teks Judul Aplikasi */
+        .brand-title {
+            color: white;
+            font-size: 44px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        /* Area Progress Status */
+        .progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        /* Batang Loading (Background) */
+        .progress-bar-bg {
+            width: 420px;
+            max-width: 90%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Batang Loading Isi yang Berjalan (Animasi Bergerak) */
+        .progress-bar-fill {
+            height: 100%;
+            background: #0891B2;
+            border-radius: 9999px;
+            width: 0%;
+            animation: loadProgress 2.5s ease-in-out forwards;
+        }
+
+        .status-text {
+            color: #67E8F9;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Teks Versi Kaki */
+        .version-text {
+            color: rgba(56, 189, 248, 0.38);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Membuat Efek Animasi Loading Mengisi Otomatis */
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            20% { width: 15%; }
+            50% { width: 65%; }
+            80% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        /* RESPONSIVE LAYAR HP: Supaya tetap pas */
+        @media (max-width: 480px) {
+            .loading-container {
+                padding: 60px 20px 40px 20px;
+            }
+            .logo-box {
+                width: 150px;
+                height: 150px;
+                border-radius: 28px;
+            }
+            .logo-initial {
+                font-size: 75px;
+            }
+            .brand-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loading-container">
+    <!-- Spacer penyeimbang atas -->
+    <div></div>
+
+    <!-- AREA UTAMA -->
+    <div class="main-content">
+        <!-- Kotak Logo -->
+        <div class="logo-box">
+            <span class="logo-initial">S</span>
+        </div>
+        
+        <!-- Judul Aplikasi -->
+        <h1 class="brand-title">SIMAVIS</h1>
+        
+        <!-- Progress Bar & Status -->
+        <div class="progress-section">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <p class="status-text">Memuat data...</p>
+        </div>
+    </div>
+
+    <!-- VERSI FOOTER -->
+    <div class="version-text">v2.0.1</div>
+</div>
+
+</body>
+</html>
