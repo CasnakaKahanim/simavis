@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Datang di Simavis</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f4f4f9; }
+        h1 { color: #333; }
+        .container { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .btn { padding: 15px 30px; font-size: 18px; text-decoration: none; color: white; border-radius: 5px; font-weight: bold; }
+        .btn-user { background-color: #007bff; }
+        .btn-staf { background-color: #28a745; }
+        .btn:hover { opacity: 0.9; }
+    </style>
 </head>
 <body>
+
     <h1>Selamat Datang di Aplikasi Simavis</h1>
-    <!-- Link ini akan mengarah langsung ke halaman login di dalam folder Anda -->
-    <a href="CodeSimavis/User/login.html">Klik di sini untuk Login</a>
+    <p>Silakan pilih gerbang masuk Anda:</p>
+
+    <div class="container">
+        <!-- Mengarahkan ke halaman login User -->
+        <a href="CodeSimavis/User/login.html" class="btn btn-user">Masuk sebagai User</a>
+        
+        <!-- Mengarahkan ke halaman login Staf -->
+        <a href="CodeSimavis/Staf/login.html" class="btn btn-staf">Masuk sebagai Staf</a>
+    </div>
+
 </body>
 </html>
