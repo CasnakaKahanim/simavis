@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIMAVIS - Daftar Pesanan</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font: Instrument Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] flex h-screen w-screen overflow-hidden">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="w-[260px] h-full flex-shrink-0 p-5 pt-8 pb-8 flex flex-col justify-between items-start border-r border-[#164E63]"
+         style="background: linear-gradient(180deg, #0F597A 0%, #0A4061 60%, #082E4D 100%);">
+    
+    <div class="w-full flex flex-col justify-start items-start gap-8">
+      <!-- Logo Brand -->
+      <div class="flex justify-start items-center gap-3">
+        <img class="w-10 h-10 rounded-lg" src="https://placehold.co/40x40" alt="Logo" />
+        <div class="flex flex-col justify-start items-start gap-0.5">
+          <div class="text-white text-base font-bold">SIMAVIS</div>
+          <div class="text-[#6C6287] text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="w-full flex flex-col gap-2">
+        <a href="dashboard.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[14.25px] absolute left-[2.25px] top-[1.5px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Dashboard SIMAVIS</span>
+        </a>
+
+        <!-- Pesanan Active Menu -->
+        <a href="pesanan.html" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[12px] h-[15px] absolute left-[3px] top-[1.5px] outline outline-2 outline-white -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Pesanan</span>
+          <span class="px-1.5 py-0.5 bg-[#6366F1]/13 rounded-md text-[#6366F1] text-[11px] font-bold">12</span>
+        </a>
+
+        <a href="galeri.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[13.5px] absolute left-[2.25px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Galeri & QR</span>
+        </a>
+
+        <a href="laporan.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[10.5px] h-[13.5px] absolute left-[3.75px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+          </div>
+          <span class="flex-1">Laporan</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Card -->
+    <div class="w-full p-3 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-start items-center gap-3 shadow-sm">
+      <img class="w-9 h-9 rounded-xl flex-shrink-0" src="https://placehold.co/36x36" alt="User Profile" />
+      <div class="flex-1 flex flex-col justify-start items-start gap-0.5 min-w-0">
+        <div class="text-[#2B2544] text-xs font-semibold truncate w-full">Dimas Prayoga</div>
+        <div class="text-[#6C6287] text-[11px] font-normal truncate w-full">Admin Utama</div>
+      </div>
+      <a href="login.html" title="Keluar" class="p-1 text-gray-400 hover:text-red-500 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 h-full flex flex-col min-w-0 overflow-y-auto custom-scrollbar p-8">
+    <div class="flex flex-col gap-6 max-w-[1106px] mx-auto w-full">
+      
+      <!-- HEADER PAGE -->
+      <div class="flex justify-between items-center w-full">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-[#2B2544] text-2xl lg:text-[30px] font-bold">Pesanan</h1>
+          <p class="text-[#6C6287] text-sm font-normal">Kelola seluruh pesanan dan reservasi Vibes Studio Foto</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2 bg-white shadow-[0px_4px_16px_rgba(49,40,82,0.03)] rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex items-center gap-2">
+            <div class="w-4 h-4 relative overflow-hidden">
+              <div class="w-3 h-[13.33px] absolute left-[2px] top-[1.33px] outline outline-2 outline-[#6366F1] -outline-offset-1"></div>
+            </div>
+            <span class="text-[#2B2544] text-xs font-semibold">Hari Ini: 14 Okt 2024</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH BAR -->
+      <div class="p-4 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-wrap justify-between items-center gap-4">
+        
+        <!-- Search & Date Filter -->
+        <div class="flex items-center gap-4 flex-wrap">
+          <div class="w-[240px] px-4 py-2 bg-white rounded-xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#6C6287]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" placeholder="Cari nama, ID..." class="w-full text-xs text-[#2B2544] placeholder-[#6C6287] bg-transparent focus:outline-none" />
+          </div>
+
+          <div class="px-4 py-2 bg-white rounded-xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#6C6287]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span class="text-[#2B2544] text-xs font-semibold">01 Okt - 14 Okt 2024</span>
+          </div>
+        </div>
+
+        <!-- Status Filter Tabs -->
+        <div class="flex items-center gap-2">
+          <button class="px-4 py-2 bg-[#0891B2]/13 text-[#0891B2] font-semibold text-xs rounded-xl outline outline-1 outline-[#0891B2] -outline-offset-1">Semua</button>
+          <button class="px-4 py-2 bg-white text-[#6C6287] font-semibold text-xs rounded-xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 hover:bg-gray-50">Lunas</button>
+          <button class="px-4 py-2 bg-white text-[#6C6287] font-semibold text-xs rounded-xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 hover:bg-gray-50">Pending</button>
+          <button class="px-4 py-2 bg-white text-[#6C6287] font-semibold text-xs rounded-xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 hover:bg-gray-50">Batal</button>
+        </div>
+
+      </div>
+
+      <!-- TABLE CONTAINER -->
+      <div class="p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-2">
+        
+        <!-- Table Header -->
+        <div class="px-4 py-3 bg-[#F3F0FA] rounded-lg flex items-center gap-3 text-xs font-semibold text-[#6C6287]">
+          <div class="w-[120px]">ID Pesanan</div>
+          <div class="w-[120px]">Tanggal</div>
+          <div class="flex-1">Pelanggan</div>
+          <div class="w-[160px]">Paket</div>
+          <div class="w-[80px]">Jumlah</div>
+          <div class="w-[100px]">Status</div>
+          <div class="w-[140px] text-right">Aksi</div>
+        </div>
+
+        <!-- Row 1: Lunas -->
+        <div class="px-4 py-3.5 bg-[#F8FBFF] border-b border-[#EAE6FA] flex items-center gap-3 text-xs">
+          <div class="w-[120px] font-bold text-[#0891B2]">LL-2024-001</div>
+          <div class="w-[120px] text-[#6C6287]">14 Okt 2024</div>
+          <div class="flex-1 font-semibold text-[#2B2544]">Andi Pratama</div>
+          <div class="w-[160px] text-[#2B2544]">Studio Portrait</div>
+          <div class="w-[80px] text-[#6C6287]">1 Sesi</div>
+          <div class="w-[100px]">
+            <span class="px-2.5 py-1 bg-[#E6FBF2] text-[#10B981] font-semibold rounded-lg text-[12px]">Lunas</span>
+          </div>
+          <div class="w-[140px] flex justify-end gap-2">
+            <button title="Detail" class="w-8 h-8 bg-[#EEF2FF] text-[#6366F1] rounded-lg flex justify-center items-center hover:bg-[#e0e7ff] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button title="Cetak Nota" class="w-8 h-8 bg-[#F3F0FA] text-[#2B2544] rounded-lg flex justify-center items-center hover:bg-[#e9e4f5] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 2: Lunas -->
+        <div class="px-4 py-3.5 border-b border-[#EAE6FA] flex items-center gap-3 text-xs">
+          <div class="w-[120px] font-bold text-[#0891B2]">LL-2024-002</div>
+          <div class="w-[120px] text-[#6C6287]">14 Okt 2024</div>
+          <div class="flex-1 font-semibold text-[#2B2544]">Rina Wijaya</div>
+          <div class="w-[160px] text-[#2B2544]">Wisuda</div>
+          <div class="w-[80px] text-[#6C6287]">1 Sesi</div>
+          <div class="w-[100px]">
+            <span class="px-2.5 py-1 bg-[#E6FBF2] text-[#10B981] font-semibold rounded-lg text-[12px]">Lunas</span>
+          </div>
+          <div class="w-[140px] flex justify-end gap-2">
+            <button title="Detail" class="w-8 h-8 bg-[#EEF2FF] text-[#6366F1] rounded-lg flex justify-center items-center hover:bg-[#e0e7ff] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button title="Cetak Nota" class="w-8 h-8 bg-[#F3F0FA] text-[#2B2544] rounded-lg flex justify-center items-center hover:bg-[#e9e4f5] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 3: Pending (Ada tombol Bayar) -->
+        <div class="px-4 py-3.5 bg-[#F8FBFF] border-b border-[#EAE6FA] flex items-center gap-3 text-xs">
+          <div class="w-[120px] font-bold text-[#0891B2]">LL-2024-003</div>
+          <div class="w-[120px] text-[#6C6287]">13 Okt 2024</div>
+          <div class="flex-1 font-semibold text-[#2B2544]">Geri Gunawan</div>
+          <div class="w-[160px] text-[#2B2544]">Pas Foto</div>
+          <div class="w-[80px] text-[#6C6287]">2 Sesi</div>
+          <div class="w-[100px]">
+            <span class="px-2.5 py-1 bg-[#FEF7E8] text-[#F59E0B] font-semibold rounded-lg text-[12px]">Pending</span>
+          </div>
+          <div class="w-[140px] flex justify-end gap-2">
+            <button title="Detail" class="w-8 h-8 bg-[#EEF2FF] text-[#6366F1] rounded-lg flex justify-center items-center hover:bg-[#e0e7ff] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button title="Ubah" class="w-8 h-8 bg-[#F3F0FA] text-[#2B2544] rounded-lg flex justify-center items-center hover:bg-[#e9e4f5] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            </button>
+            <a href="pembayaran.html" class="px-3 py-1.5 bg-[#0891B2] hover:bg-[#06748f] transition-colors text-white font-bold text-xs rounded-lg flex items-center">
+              Bayar
+            </a>
+          </div>
+        </div>
+
+        <!-- Row 4: Batal -->
+        <div class="px-4 py-3.5 border-b border-[#EAE6FA] flex items-center gap-3 text-xs">
+          <div class="w-[120px] font-bold text-[#0891B2]">LL-2024-004</div>
+          <div class="w-[120px] text-[#6C6287]">12 Okt 2024</div>
+          <div class="flex-1 font-semibold text-[#2B2544]">Siti Rahma</div>
+          <div class="w-[160px] text-[#2B2544]">Prewedding</div>
+          <div class="w-[80px] text-[#6C6287]">1 Paket</div>
+          <div class="w-[100px]">
+            <span class="px-2.5 py-1 bg-[#FFF1F1] text-[#EF4444] font-semibold rounded-lg text-[12px]">Batal</span>
+          </div>
+          <div class="w-[140px] flex justify-end gap-2">
+            <button title="Detail" class="w-8 h-8 bg-[#EEF2FF] text-[#6366F1] rounded-lg flex justify-center items-center hover:bg-[#e0e7ff] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button title="Cetak Nota" class="w-8 h-8 bg-[#F3F0FA] text-[#2B2544] rounded-lg flex justify-center items-center hover:bg-[#e9e4f5] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 5: Lunas -->
+        <div class="px-4 py-3.5 bg-[#F8FBFF] border-b border-[#EAE6FA] flex items-center gap-3 text-xs">
+          <div class="w-[120px] font-bold text-[#0891B2]">LL-2024-005</div>
+          <div class="w-[120px] text-[#6C6287]">12 Okt 2024</div>
+          <div class="flex-1 font-semibold text-[#2B2544]">Budi Santoso</div>
+          <div class="w-[160px] text-[#2B2544]">Wedding</div>
+          <div class="w-[80px] text-[#6C6287]">1 Paket</div>
+          <div class="w-[100px]">
+            <span class="px-2.5 py-1 bg-[#E6FBF2] text-[#10B981] font-semibold rounded-lg text-[12px]">Lunas</span>
+          </div>
+          <div class="w-[140px] flex justify-end gap-2">
+            <button title="Detail" class="w-8 h-8 bg-[#EEF2FF] text-[#6366F1] rounded-lg flex justify-center items-center hover:bg-[#e0e7ff] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button title="Cetak Nota" class="w-8 h-8 bg-[#F3F0FA] text-[#2B2544] rounded-lg flex justify-center items-center hover:bg-[#e9e4f5] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 6: Pending (Ada tombol Bayar) -->
+        <div class="px-4 py-3.5 bg-[#F8FBFF] border-b border-[#EAE6FA] flex items-center gap-3 text-xs">
+          <div class="w-[120px] font-bold text-[#0891B2]">LL-2024-006</div>
+          <div class="w-[120px] text-[#6C6287]">11 Okt 2024</div>
+          <div class="flex-1 font-semibold text-[#2B2544]">Citra Lestari</div>
+          <div class="w-[160px] text-[#2B2544]">Studio Portrait</div>
+          <div class="w-[80px] text-[#6C6287]">1 Sesi</div>
+          <div class="w-[100px]">
+            <span class="px-2.5 py-1 bg-[#FEF7E8] text-[#F59E0B] font-semibold rounded-lg text-[12px]">Pending</span>
+          </div>
+          <div class="w-[140px] flex justify-end gap-2">
+            <button title="Detail" class="w-8 h-8 bg-[#EEF2FF] text-[#6366F1] rounded-lg flex justify-center items-center hover:bg-[#e0e7ff] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button title="Ubah" class="w-8 h-8 bg-[#F3F0FA] text-[#2B2544] rounded-lg flex justify-center items-center hover:bg-[#e9e4f5] transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            </button>
+            <a href="Pembayaran.html" class="px-3 py-1.5 bg-[#0891B2] hover:bg-[#06748f] transition-colors text-white font-bold text-xs rounded-lg flex items-center">
+              Bayar
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+</body>
+</html>

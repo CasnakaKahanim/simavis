@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUMAVIS - Formulir Booking Studio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#F6F8FC] text-[#0C4A6E] antialiased">
+
+  <!-- ================= 1. NAVBAR (STICKY / TAHAN SCROLL) ================= -->
+  <header class="sticky top-0 z-50 w-full h-[68px] px-6 lg:px-12 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] flex justify-between items-center shadow-sm">
+    
+    <!-- Logo Brand -->
+    <a href="index.html" class="flex items-center gap-2 shrink-0">
+      <div class="w-8 h-8 bg-[#0891B2] rounded-lg flex justify-center items-center shadow-sm">
+        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </div>
+      <span class="text-[#0C4A6E] text-lg font-extrabold tracking-tight">SUMAVIS</span>
+    </a>
+
+    <!-- Right User Profile -->
+    <div class="flex items-center gap-2 shrink-0 cursor-pointer">
+      <div class="w-8 h-8 bg-[#E6F7F8] rounded-full flex items-center justify-center text-[#0891B2] text-xs font-bold">
+        NA
+      </div>
+      <span class="text-[#0C4A6E] text-xs font-semibold">Nadia A.</span>
+      <svg class="w-3.5 h-3.5 text-[#64748B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+
+  </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="w-full max-w-[1140px] mx-auto px-6 lg:px-12 py-8 flex flex-col gap-6">
+
+    <!-- PAGE HEADER TITLE & METADATA -->
+    <div class="flex flex-col gap-1">
+      <h1 class="text-[#0C4A6E] text-2xl lg:text-3xl font-bold">Booking</h1>
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+        <p class="text-[#64748B] text-xs">Catat info pelanggan, lalu isi detail foto, dan konfirmasikan pemesanan.</p>
+        <div class="flex items-center gap-2 text-xs text-[#0891B2]">
+          <span>Pelanggan datang langsung</span>
+          <span class="text-[#64748B]">•</span>
+          <span>Chat booking</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WIZARD STEPPER -->
+    <div class="flex items-center gap-2 text-xs font-semibold overflow-x-auto pb-1">
+      <!-- Step 1 Active -->
+      <div class="px-3 py-2 bg-[#E6F7F8] text-[#0891B2] rounded-lg flex items-center gap-2 shrink-0">
+        <div class="w-5 h-5 bg-[#0891B2] text-white rounded-full flex items-center justify-center text-[11px] font-bold">1</div>
+        <span>Detail booking</span>
+      </div>
+      
+      <div class="w-6 h-px bg-[#CBD5E1] shrink-0"></div>
+
+      <!-- Step 2 Inactive -->
+      <div class="px-3 py-2 text-[#94A3B8] rounded-lg flex items-center gap-2 shrink-0">
+        <div class="w-5 h-5 bg-[#E2E8F0] text-[#94A3B8] rounded-full flex items-center justify-center text-[11px] font-bold">2</div>
+        <span class="font-medium">Pilih Paket Foto</span>
+      </div>
+
+      <div class="w-6 h-px bg-[#CBD5E1] shrink-0"></div>
+
+      <!-- Step 3 Inactive -->
+      <div class="px-3 py-2 text-[#94A3B8] rounded-lg flex items-center gap-2 shrink-0">
+        <div class="w-5 h-5 bg-[#E2E8F0] text-[#94A3B8] rounded-full flex items-center justify-center text-[11px] font-bold">3</div>
+        <span class="font-medium">Selesai</span>
+      </div>
+    </div>
+
+    <!-- MAIN FORM & SUMMARY GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- LEFT FORM COLUMN (8 COLS) -->
+      <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-5">
+        
+        <!-- SECTION 1: DATA PEMESAN -->
+        <div class="p-6 bg-white rounded-xl border border-[#E2E8F0] shadow-xs flex flex-col gap-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 bg-[#0891B2] text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+              1
+            </div>
+            <div class="flex flex-col">
+              <h3 class="text-[#0C4A6E] text-base font-bold">Data pemesan</h3>
+              <p class="text-[#64748B] text-xs">Isi data pelanggan yang akan melakukan sesi foto.</p>
+            </div>
+          </div>
+
+          <form class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <!-- Nama Lengkap -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[#0C4A6E] font-medium">Nama lengkap *</label>
+              <input type="text" value="Nadia Putri" class="h-10 px-3.5 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] placeholder-[#94A3B8] focus:border-[#0891B2] focus:ring-1 focus:ring-[#0891B2] outline-none" placeholder="Masukkan nama lengkap" required />
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[#0C4A6E] font-medium">Nomor WhatsApp *</label>
+              <input type="text" value="0812 3456 7890" class="h-10 px-3.5 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] placeholder-[#94A3B8] focus:border-[#0891B2] focus:ring-1 focus:ring-[#0891B2] outline-none" placeholder="08123456789" required />
+            </div>
+
+            <!-- Email -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[#0C4A6E] font-medium">Email (opsional)</label>
+              <input type="email" placeholder="pelanggan@email.com" class="h-10 px-3.5 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] placeholder-[#94A3B8] focus:border-[#0891B2] focus:ring-1 focus:ring-[#0891B2] outline-none" />
+            </div>
+
+            <!-- Jumlah Peserta -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[#0C4A6E] font-medium">Jumlah peserta *</label>
+              <div class="relative">
+                <select class="w-full h-10 px-3.5 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] appearance-none focus:border-[#0891B2] focus:ring-1 focus:ring-[#0891B2] outline-none cursor-pointer">
+                  <option value="1">1 orang</option>
+                  <option value="2" selected>2 orang</option>
+                  <option value="3">3 orang</option>
+                  <option value="4">4 orang</option>
+                  <option value="5+">5+ orang</option>
+                </select>
+                <div class="absolute right-3.5 top-3.5 pointer-events-none text-[#64748B]">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- SECTION 2: PILIH PAKET FOTO -->
+        <div class="p-6 bg-white rounded-xl border border-[#E2E8F0] shadow-xs flex flex-col gap-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 bg-[#E6F7F8] text-[#0891B2] rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+              2
+            </div>
+            <div class="flex flex-col">
+              <h3 class="text-[#0C4A6E] text-base font-bold">Pilih paket foto</h3>
+              <p class="text-[#64748B] text-xs">Pilih paket sesuai kebutuhan pelanggan.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            
+            <!-- Option 1 -->
+            <label class="p-4 bg-white border border-[#E2E8F0] rounded-xl flex flex-col gap-2 cursor-pointer hover:border-[#0891B2] transition-all">
+              <div class="flex justify-between items-center">
+                <input type="radio" name="paket" class="w-4 h-4 text-[#0891B2] focus:ring-[#0891B2]" />
+              </div>
+              <span class="text-[#0C4A6E] font-semibold text-xs">Personal Portrait</span>
+              <span class="text-[#64748B] text-[11px]">30 menit · 1 orang</span>
+              <span class="text-[#0C4A6E] font-bold text-sm">Rp350.000</span>
+            </label>
+
+            <!-- Option 2 (Selected) -->
+            <label class="p-4 bg-[#E6F7F8] border-2 border-[#0891B2] rounded-xl flex flex-col gap-2 cursor-pointer transition-all">
+              <div class="flex justify-between items-center">
+                <input type="radio" name="paket" checked class="w-4 h-4 text-[#0891B2] focus:ring-[#0891B2]" />
+              </div>
+              <span class="text-[#0C4A6E] font-semibold text-xs">Couple & Friends</span>
+              <span class="text-[#64748B] text-[11px]">60 menit · 2–4 orang</span>
+              <span class="text-[#0891B2] font-bold text-sm">Rp650.000</span>
+            </label>
+
+            <!-- Option 3 -->
+            <label class="p-4 bg-white border border-[#E2E8F0] rounded-xl flex flex-col gap-2 cursor-pointer hover:border-[#0891B2] transition-all">
+              <div class="flex justify-between items-center">
+                <input type="radio" name="paket" class="w-4 h-4 text-[#0891B2] focus:ring-[#0891B2]" />
+              </div>
+              <span class="text-[#0C4A6E] font-semibold text-xs">Family Moments</span>
+              <span class="text-[#64748B] text-[11px]">90 menit · hingga 6 orang</span>
+              <span class="text-[#0C4A6E] font-bold text-sm">Rp950.000</span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- SECTION 3: SESI HARI INI (KALENDER & JAM) -->
+        <div class="p-6 bg-white rounded-xl border border-[#E2E8F0] shadow-xs flex flex-col gap-4">
+          <div class="flex justify-between items-center flex-wrap gap-2">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 bg-[#E6F7F8] text-[#0891B2] rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+                3
+              </div>
+              <div class="flex flex-col">
+                <h3 class="text-[#0C4A6E] text-base font-bold">Sesi hari ini</h3>
+                <p class="text-[#64748B] text-xs">Pilih tanggal dan waktu sesi foto.</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 bg-[#E6F7F8] text-[#0891B2] text-[11px] font-semibold rounded-full">Sabtu, 17 Oktober · Hari ini</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+            
+            <!-- Calendar Grid (6 Cols) -->
+            <div class="md:col-span-6 flex flex-col gap-3">
+              <div class="flex justify-between items-center text-xs font-semibold text-[#0C4A6E]">
+                <button class="text-[#64748B] hover:text-[#0C4A6E]">&lt;</button>
+                <span>Oktober 2026</span>
+                <button class="text-[#64748B] hover:text-[#0C4A6E]">&gt;</button>
+              </div>
+
+              <div class="grid grid-cols-7 gap-1 text-center text-[11px] text-[#94A3B8] font-medium">
+                <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+              </div>
+
+              <div class="grid grid-cols-7 gap-1 text-center text-xs">
+                <!-- Empty Slots -->
+                <div></div><div></div><div></div>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">1</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">2</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">3</button>
+                <button class="h-8 rounded bg-[#E6F7F8] text-[#0891B2] font-semibold">4</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">5</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">6</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">7</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">8</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">9</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">10</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">11</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">12</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">13</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">14</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">15</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">16</button>
+                <!-- Selected Date 17 -->
+                <button class="h-8 rounded bg-[#0891B2] text-white font-bold shadow-xs">17</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">18</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">19</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">20</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">21</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">22</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">23</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">24</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">25</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">26</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">27</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">28</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">29</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">30</button>
+                <button class="h-8 rounded text-[#64748B] hover:bg-gray-100">31</button>
+              </div>
+
+              <span class="text-[11px] text-[#94A3B8] pt-1">Tanggal biru: pilihan Anda · Abu-abu: sudah lewat</span>
+            </div>
+
+            <!-- Time Slots (6 Cols) -->
+            <div class="md:col-span-6 flex flex-col gap-3">
+              <div class="flex flex-col">
+                <span class="text-[#0C4A6E] text-xs font-semibold">Sabtu, 17 Oktober</span>
+                <span class="text-[#16795E] text-[11px]">5 sesi tersedia untuk paket Anda</span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                <button class="h-9 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] hover:border-[#0891B2]">09.00</button>
+                <button class="h-9 bg-[#F6F8FC] border border-[#E2E8F0] rounded-lg text-[#636E80] line-through cursor-not-allowed">10.30</button>
+                <button class="h-9 bg-[#0891B2] border border-[#0891B2] rounded-lg text-white font-semibold shadow-xs">13.00</button>
+                <button class="h-9 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] hover:border-[#0891B2]">14.30</button>
+                <button class="h-9 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] hover:border-[#0891B2]">16.00</button>
+                <button class="h-9 bg-white border border-[#E2E8F0] rounded-lg text-[#0C4A6E] hover:border-[#0891B2]">17.30</button>
+              </div>
+
+              <p class="text-[#64748B] text-xs leading-relaxed">
+                Sesi terpilih: 13.00–14.00. Datang 15 menit lebih awal untuk persiapan.
+              </p>
+
+              <div class="flex items-center gap-1.5 text-[11px] text-[#94A3B8]">
+                <span class="w-2 h-2 bg-[#E2E8F0] rounded-xs"></span>
+                <span>10.30 sudah dipesan</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SUMMARY COLUMN (4 COLS) -->
+      <div class="lg:col-span-5 xl:col-span-4 p-6 bg-white rounded-xl border border-[#E2E8F0] shadow-xs flex flex-col gap-5 sticky top-[88px]">
+        
+        <div class="flex flex-col gap-0.5">
+          <span class="text-[#94A3B8] text-[11px] font-semibold tracking-wider uppercase">RINGKASAN PESANAN</span>
+          <span class="text-[#64748B] text-xs">Walk-in · Vibes Studio Jatibarang · hari ini</span>
+        </div>
+
+        <!-- Selected Package Detail Box -->
+        <div class="flex flex-col gap-1.5">
+          <span class="text-[#94A3B8] text-[10px] font-semibold uppercase tracking-wider">PAKET TERPILIH</span>
+          <div class="p-3.5 bg-[#E6F7F8] rounded-lg flex flex-col gap-1">
+            <span class="text-[#0891B2] text-xs font-bold">Couple & Friends</span>
+            <span class="text-[#64748B] text-[11px]">60 menit · 2 orang · 2 backdrop</span>
+            <span class="text-[#64748B] text-[11px]">10 foto edit + seluruh file original</span>
+          </div>
+        </div>
+
+        <!-- Details List -->
+        <div class="flex flex-col gap-2.5 text-xs text-[#0C4A6E]">
+          <div class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-[#64748B] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>Sabtu, 17 Oktober 2026</span>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-[#64748B] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>13.00–14.00 WIB</span>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-[#64748B] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            <div class="flex items-center gap-1.5">
+              <div class="w-4 h-4 bg-[#E6F7F8] rounded-full flex items-center justify-center text-[#0891B2] text-[9px] font-bold">RP</div>
+              <span>Nadia Putri · 2 orang</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <svg class="w-4 h-4 text-[#64748B] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>Vibes Studio, Jatibarang</span>
+          </div>
+        </div>
+
+        <div class="h-px bg-[#E2E8F0]"></div>
+
+        <!-- Price Breakdown -->
+        <div class="flex flex-col gap-2 text-xs">
+          <div class="flex justify-between items-center text-[#64748B]">
+            <span>Couple & Friends</span>
+            <span class="text-[#0C4A6E] font-semibold">Rp650.000</span>
+          </div>
+          <div class="flex justify-between items-center text-[#64748B]">
+            <span>Cetak 20 × 30 cm</span>
+            <span class="text-[#0C4A6E] font-semibold">Rp100.000</span>
+          </div>
+          <div class="flex justify-between items-center text-[#64748B]">
+            <span>Biaya layanan</span>
+            <span class="text-[#0C4A6E] font-semibold">Rp0</span>
+          </div>
+
+          <div class="h-px bg-[#E2E8F0] my-1"></div>
+
+          <div class="flex justify-between items-center">
+            <span class="text-[#0C4A6E] text-sm font-bold">Total biaya</span>
+            <span class="text-[#0C4A6E] text-xl font-bold">Rp750.000</span>
+          </div>
+        </div>
+
+        <!-- Payment Preview Banner -->
+        <div class="p-3.5 bg-[#F0FAFA] border border-[#BAE6ED] rounded-lg flex flex-col gap-1">
+          <div class="flex justify-between items-center text-[#0891B2]">
+            <span class="text-xs font-semibold">Pratinjau pembayaran</span>
+            <span class="text-base font-bold">Rp750.000</span>
+          </div>
+          <span class="text-[#64748B] text-[11px] leading-relaxed">
+            Pembayaran di kasir atau via QR. Total member CAP online.
+          </span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" class="h-11 w-full bg-[#0891B2] hover:bg-[#06748f] transition-colors text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 shadow-xs">
+          <span>Simpan & lanjut ke pembayaran →</span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="w-full max-w-[1140px] mx-auto px-6 lg:px-12 py-5 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-[#94A3B8]">
+    <span>© 2026 SUMAVIS</span>
+    <span>Vibes Studio, Jatibarang  ·  Bantuan booking</span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMAVIS - Splash Screen</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@500;600;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .splash-container {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, #0C4A6E 0%, #164E63 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 20px 60px 20px;
+            cursor: pointer; /* Menandakan layar bisa diklik */
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 48px;
+            width: 100%;
+        }
+
+        .logo-box {
+            width: 240px;
+            height: 240px;
+            background-color: white;
+            box-shadow: 0px 16px 32px rgba(8, 145, 178, 0.31);
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-initial {
+            color: #0891B2;
+            font-size: 120px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .brand-section {
+            text-align: center;
+            width: 100%;
+        }
+
+        .brand-title {
+            color: white;
+            font-size: 56px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            color: #67E8F9;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .powered-by {
+            color: rgba(56, 189, 248, 0.38);
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .studio-name {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .splash-container {
+                padding: 60px 20px 40px 20px;
+            }
+            .logo-box {
+                width: 180px;
+                height: 180px;
+                border-radius: 30px;
+            }
+            .logo-initial {
+                font-size: 90px;
+            }
+            .brand-title {
+                font-size: 40px;
+            }
+            .brand-subtitle {
+                font-size: 11px;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="splash-container" onclick="pindahHalaman()">
+    <div></div>
+
+    <div class="main-content">
+        <div class="logo-box">
+            <span class="logo-initial">S</span>
+        </div>
+        
+        <div class="brand-section">
+            <h1 class="brand-title">SIMAVIS</h1>
+            <p class="brand-subtitle">Sistem Informasi Manajemen Studio Foto</p>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <span class="powered-by">Powered by</span>
+        <span class="studio-name">Vibes Studio Foto Jatibarang</span>
+    </div>
+</div>
+
+<script>
+    // Fungsi untuk pindah halaman
+    function pindahHalaman() {
+        window.location.href = "Start2.html"; // Pastikan nama file halaman Start 2 sesuai
+    }
+
+    // Timer otomatis 3 detik (3000ms)
+    setTimeout(pindahHalaman, 3000);
+</script>
+
+</body>
+</html>

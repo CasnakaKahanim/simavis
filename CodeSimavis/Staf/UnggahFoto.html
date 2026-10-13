@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIMAVIS - Unggah Foto Pesanan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Instrument Sans', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] flex h-screen w-screen overflow-hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="w-[260px] h-full flex-shrink-0 p-5 pt-8 pb-8 flex flex-col justify-between items-start border-r border-[#164E63]"
+         style="background: linear-gradient(180deg, #0F597A 0%, #0A4061 60%, #082E4D 100%);">
+    <div class="w-full flex flex-col justify-start items-start gap-8">
+      <div class="flex justify-start items-center gap-3">
+        <img class="w-10 h-10 rounded-lg" src="https://placehold.co/40x40" alt="Logo" />
+        <div class="flex flex-col justify-start items-start gap-0.5">
+          <div class="text-white text-base font-bold">SIMAVIS</div>
+          <div class="text-[#6C6287] text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
+        </div>
+      </div>
+      <nav class="w-full flex flex-col gap-2">
+        <a href="dashboard.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <span class="flex-1">Dashboard SIMAVIS</span>
+        </a>
+        <a href="pesanan.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <span class="flex-1">Pesanan</span>
+          <span class="px-1.5 py-0.5 bg-[#F0EDFF] rounded-md text-[#8A72F1] text-[11px] font-bold">12</span>
+        </a>
+        <a href="galeri.html" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md">
+          <span class="flex-1">Galeri & QR</span>
+        </a>
+        <a href="Laporan.html" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+          <span class="flex-1">Laporan</span>
+        </a>
+      </nav>
+    </div>
+    <div class="w-full p-3 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-start items-center gap-3 shadow-sm">
+      <img class="w-9 h-9 rounded-xl flex-shrink-0" src="https://placehold.co/36x36" alt="User Profile" />
+      <div class="flex-1 flex flex-col justify-start items-start gap-0.5 min-w-0">
+        <div class="text-[#2B2544] text-xs font-semibold truncate w-full">Dimas Prayoga</div>
+        <div class="text-[#6C6287] text-[11px] font-normal truncate w-full">Admin Utama</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 h-full flex flex-col min-w-0 overflow-y-auto custom-scrollbar p-8">
+    <div class="flex flex-col gap-6 max-w-[1106px] mx-auto w-full">
+      
+      <!-- HEADER PAGE -->
+      <div class="flex justify-between items-center w-full pb-2">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-[#2B2544] text-2xl lg:text-[30px] font-bold">Unggah Foto Pesanan</h1>
+          <p class="text-[#6C6287] text-sm font-normal">Masukkan hasil foto ke folder pesanan pelanggan</p>
+        </div>
+        <div class="px-4 py-2 bg-white shadow-sm rounded-xl outline outline-1 outline-[#EAE6FA] text-[#2B2544] text-xs font-semibold">
+          Hari Ini: 14 Okt 2024
+        </div>
+      </div>
+
+      <!-- BREADCRUMB -->
+      <div class="flex flex-col gap-1">
+        <a href="galeri.html" class="flex items-center gap-2 text-[#0891B2] text-xs font-semibold hover:underline w-fit">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>Kembali ke Galeri</span>
+        </a>
+        <div class="text-[#6C6287] text-xs">
+          Galeri / <span class="font-medium text-[#2B2544]">Andi Pratama — LL-2024-001</span>
+        </div>
+      </div>
+
+      <!-- SUMMARY CARD -->
+      <div class="p-6 bg-white shadow-sm rounded-2xl border border-[#E5E7EB] flex flex-col gap-5">
+        <div class="flex justify-between items-center w-full flex-wrap gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 bg-[#ECFEFF] rounded-xl flex justify-center items-center shrink-0">
+              <svg class="w-6 h-6 text-[#0891B2]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <h2 class="text-[#2B2544] text-xl font-bold">Andi Pratama</h2>
+              <span class="text-[#0891B2] text-xs font-semibold">LL-2024-001</span>
+            </div>
+          </div>
+          
+          <div id="statusBadge" class="px-3 py-1.5 bg-[#ECFEFF] rounded-lg text-[#0891B2] text-xs font-semibold flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span id="statusText">Sedang Mengunggah</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs pt-2 border-t border-gray-100">
+          <div class="flex flex-col gap-1"><span class="text-[#6C6287]">Paket</span><span class="font-semibold text-[#2B2544] text-sm">Studio Portrait</span></div>
+          <div class="flex flex-col gap-1"><span class="text-[#6C6287]">Tanggal pesanan</span><span class="font-semibold text-[#2B2544] text-sm">14 Oktober 2024</span></div>
+          <div class="flex flex-col gap-1"><span class="text-[#6C6287]">Status pembayaran</span><div><span class="px-2.5 py-1 bg-[#E6FBF2] text-[#10B981] font-semibold rounded-lg">Lunas</span></div></div>
+          <div class="text-right text-[#6C6287] text-[11px] leading-relaxed self-center">Data pelanggan otomatis dari pesanan</div>
+        </div>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT: UPLOAD BOX & PROGRESS -->
+        <div class="lg:col-span-8 p-6 bg-white shadow-sm rounded-2xl border border-[#E5E7EB] flex flex-col gap-6">
+          <div class="flex flex-col gap-1">
+            <h3 class="text-[#2B2544] text-lg font-bold">Unggah hasil foto</h3>
+            <p class="text-[#6C6287] text-xs">Foto akan tersimpan di folder Andi Pratama — LL-2024-001.</p>
+          </div>
+
+          <!-- DRAG BOX -->
+          <div class="p-6 bg-[#F7FCFD] rounded-xl border border-[#0891B2]/40 flex flex-col items-center gap-3 text-center">
+            <div class="w-12 h-12 bg-[#ECFEFF] rounded-xl flex justify-center items-center">
+              <svg class="w-6 h-6 text-[#0891B2]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <span class="text-[#2B2544] font-semibold text-sm">Tarik dan lepas foto di sini</span>
+            <span class="text-[#6C6287] text-xs">atau pilih dari perangkat Anda</span>
+
+            <button onclick="startUploadProcess()" class="px-4 py-2 bg-[#0891B2] hover:bg-[#06748f] transition-colors text-white text-xs font-semibold rounded-xl flex items-center gap-2 shadow-sm">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>Mulai Unggah Foto</span>
+            </button>
+          </div>
+
+          <!-- PROGRESS -->
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-semibold text-[#2B2544]">Progres unggahan</span>
+              <span id="fileCountText" class="text-[#6C6287]">1 berkas • sedang berlangsung</span>
+            </div>
+
+            <div class="p-4 bg-[#F8FBFF] rounded-xl border border-[#E5E7EB] flex flex-col gap-3.5">
+              <div class="flex justify-between items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-lg border border-gray-200 flex justify-center items-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0891B2]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div class="flex-1 flex flex-col gap-0.5 min-w-0">
+                  <span class="font-semibold text-[#2B2544] text-xs truncate">andi-portrait-01.jpg</span>
+                  <span id="uploadDetailText" class="text-[#6C6287] text-[11px]">Mengunggah ke folder pesanan…</span>
+                </div>
+                <span id="progressPercent" class="text-[#0891B2] font-bold text-base">35%</span>
+              </div>
+
+              <div class="w-full h-2 bg-[#DFEDF1] rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full bg-[#0891B2] rounded-full w-[35%] transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NEXT BUTTON (GOTO DETAIL FOLDER) -->
+          <a id="goToFolderBtn" href="UnggahSelesai.html" class="hidden w-full py-3 bg-[#10B981] hover:bg-[#059669] transition-colors text-white font-bold text-xs rounded-xl flex justify-center items-center gap-2 shadow-md">
+            <span>Unggahan Selesai — Buka Folder Foto</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+
+        </div>
+
+        <!-- RIGHT: PANEL LINK & QR -->
+        <div class="lg:col-span-4 p-6 bg-white shadow-sm rounded-2xl border border-[#E5E7EB] flex flex-col gap-4.5">
+          <div class="flex flex-col gap-1">
+            <h3 class="text-[#2B2544] text-lg font-bold">Link & QR unduh</h3>
+            <p class="text-[#6C6287] text-xs">Akses foto pelanggan berada di dalam folder pesanan ini.</p>
+          </div>
+
+          <!-- QR BOX (TOGGLE DISABLED / ACTIVE) -->
+          <div id="qrBox" class="p-5 bg-[#F3F4F6] rounded-xl flex flex-col items-center gap-3 text-center transition-colors">
+            <img id="qrImage" src="https://placehold.co/180x180?text=Menunggu..." class="w-[180px] h-[180px] rounded-xl opacity-40" />
+            <span id="qrTitle" class="text-[#2B2544] font-semibold text-xs">Belum siap dibagikan</span>
+            <span id="qrDesc" class="text-[#6C6287] text-[11px]">Link dan QR unduh tersedia setelah foto berhasil diunggah.</span>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-[#6C6287] text-xs font-semibold">Link unduh foto</label>
+            <div id="linkText" class="p-3 bg-[#F3F4F6] rounded-xl text-[#9195A2] text-xs truncate">
+              Menunggu unggahan selesai
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 mt-1">
+              <button id="btnCopy" disabled class="h-10 bg-[#F3F4F6] border border-[#E5E7EB] text-[#9195A2] font-semibold text-xs rounded-xl cursor-not-allowed">
+                Salin link
+              </button>
+              <button id="btnQr" disabled class="h-10 bg-[#F3F4F6] border border-[#E5E7EB] text-[#9195A2] font-semibold text-xs rounded-xl cursor-not-allowed">
+                Unduh QR
+              </button>
+            </div>
+
+            <button id="btnShare" disabled class="w-full h-10 bg-[#F3F4F6] border border-[#E5E7EB] text-[#9195A2] font-semibold text-xs rounded-xl cursor-not-allowed mt-1">
+              Bagikan ke pelanggan
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SCRIPT SIMULASI HUBUNGAN PROSES KE SELESAI -->
+  <script>
+    let currentProgress = 35;
+    let uploadInterval;
+
+    function startUploadProcess() {
+      if (currentProgress >= 100) return;
+
+      uploadInterval = setInterval(() => {
+        currentProgress += 15;
+        if (currentProgress >= 100) {
+          currentProgress = 100;
+          clearInterval(uploadInterval);
+          finishUpload();
+        }
+
+        // Update UI
+        document.getElementById('progressBar').style.width = currentProgress + '%';
+        document.getElementById('progressPercent').innerText = currentProgress + '%';
+      }, 500);
+    }
+
+    function finishUpload() {
+      // 1. Ubah Badge Status
+      document.getElementById('statusBadge').className = 'px-3 py-1.5 bg-[#E6FBF2] rounded-lg text-[#10B981] text-xs font-semibold flex items-center gap-1.5';
+      document.getElementById('statusText').innerText = 'Foto Siap';
+
+      // 2. Ubah Detail Teks
+      document.getElementById('uploadDetailText').innerText = 'Selesai diunggah ke folder pesanan.';
+      document.getElementById('fileCountText').innerText = '1 dari 1 foto selesai';
+
+      // 3. Tampilkan Tombol Lanjut ke Detail Folder
+      document.getElementById('goToFolderBtn').classList.remove('hidden');
+
+      // 4. Aktifkan Panel QR & Link Kanan
+      document.getElementById('qrBox').className = 'p-5 bg-[#ECFEFF] rounded-xl flex flex-col items-center gap-3 text-center';
+      document.getElementById('qrImage').src = 'https://placehold.co/180x180';
+      document.getElementById('qrImage').classList.remove('opacity-40');
+      document.getElementById('qrTitle').innerText = 'Scan untuk mengunduh foto';
+      document.getElementById('qrDesc').innerText = 'Masa aktif link: Hingga 14 Nov 2024';
+
+      document.getElementById('linkText').className = 'p-3 bg-[#F3F0FA] rounded-xl text-[#0891B2] text-xs truncate';
+      document.getElementById('linkText').innerText = 'https://vibesstudio.foto/d/andi-pratama-8291';
+
+      // Aktifkan Tombol
+      ['btnCopy', 'btnQr', 'btnShare'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = false;
+        btn.className = id === 'btnShare' 
+          ? 'w-full h-10 bg-[#0891B2] text-white font-semibold text-xs rounded-xl hover:bg-[#06748f] transition-colors mt-1'
+          : 'h-10 bg-white border border-[#EAE6FA] text-[#0891B2] font-semibold text-xs rounded-xl hover:bg-[#0891B2]/5 transition-colors';
+      });
+    }
+
+    // Jalankan otomatis untuk demo
+    window.onload = function() {
+      startUploadProcess();
+    };
+  </script>
+
+</body>
+</html>

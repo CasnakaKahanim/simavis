@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIMAVIS - Pembayaran Walk-in</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font: Instrument Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] flex h-screen w-screen overflow-hidden">
+
+<!-- ================= SIDEBAR (TANPA HOVER EFFECT) ================= -->
+    <aside class="w-[260px] h-full flex-shrink-0 p-5 pt-8 pb-8 flex flex-col justify-between items-start border-r border-[#164E63]"
+        style="background: linear-gradient(180deg, #0F597A 0%, #0A4061 60%, #082E4D 100%);">
+    
+    <div class="w-full flex flex-col justify-start items-start gap-8">
+        <!-- Logo Brand -->
+        <div class="flex justify-start items-center gap-3">
+        <img class="w-10 h-10 rounded-lg" src="https://placehold.co/40x40" alt="Logo" />
+        <div class="flex flex-col justify-start items-start gap-0.5">
+            <div class="text-white text-base font-bold">SIMAVIS</div>
+            <div class="text-[#22D3EE]/80 text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
+        </div>
+        </div>
+
+        <!-- Navigation Menu (Semua hover dihapus & kursor dibuat default/pointer tanpa efek warna) -->
+        <nav class="w-full flex flex-col gap-2">
+        <!-- Menu Aktif -->
+        <a href="javascript:void(0)" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md cursor-default">
+            <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[14.25px] absolute left-[2.25px] top-[1.5px] outline outline-2 outline-white -outline-offset-1"></div>
+            </div>
+            <span class="flex-1">Dashboard SIMAVIS</span>
+        </a>
+
+        <!-- Menu Non-Aktif (Efek hover:bg-white/10 sudah dibuang) -->
+        <a href="javascript:void(0)" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 font-medium text-sm cursor-default">
+            <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[12px] h-[15px] absolute left-[3px] top-[1.5px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+            </div>
+            <span class="flex-1">Pesanan</span>
+            <span class="px-1.5 py-0.5 bg-[#06B6D4]/13 rounded-md text-[#06B6D4] text-[11px] font-bold">12</span>
+        </a>
+
+        <a href="javascript:void(0)" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 font-medium text-sm cursor-default">
+            <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[13.5px] h-[13.5px] absolute left-[2.25px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+            </div>
+            <span class="flex-1">Galeri & QR</span>
+        </a>
+
+        <a href="javascript:void(0)" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 font-medium text-sm cursor-default">
+            <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
+            <div class="w-[10.5px] h-[13.5px] absolute left-[3.75px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
+            </div>
+            <span class="flex-1">Laporan</span>
+        </a>
+        </nav>
+    </div>
+
+    <!-- User Profile Card -->
+    <div class="w-full p-3 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-start items-center gap-3 shadow-sm">
+        <img class="w-9 h-9 rounded-xl flex-shrink-0" src="https://placehold.co/36x36" alt="User Profile" />
+        <div class="flex-1 flex flex-col justify-start items-start gap-0.5 min-w-0">
+        <div class="text-[#2B2544] text-xs font-semibold truncate w-full">Dimas Prayoga</div>
+        <div class="text-[#6C6287] text-[11px] font-normal truncate w-full">Admin Utama</div>
+        </div>
+    </div>
+    </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 h-full flex flex-col min-w-0 overflow-y-auto custom-scrollbar p-8">
+    <div class="flex flex-col gap-6 max-w-[1000px] mx-auto w-full">
+      
+      <!-- HEADER PAGE -->
+      <div class="flex justify-between items-center w-full">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-[#2B2544] text-2xl lg:text-[30px] font-bold">Pembayaran</h1>
+          <p class="text-[#6C6287] text-sm font-normal">Langkah kedua booking walk-in • terima pembayaran pelanggan sebelum menandai lunas.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2 bg-white shadow-[0px_4px_16px_rgba(49,40,82,0.03)] rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex items-center gap-2">
+            <div class="w-4 h-4 relative overflow-hidden">
+              <div class="w-3 h-[13.33px] absolute left-[2px] top-[1.33px] outline outline-2 outline-[#0891B2] -outline-offset-1"></div>
+            </div>
+            <span class="text-[#2B2544] text-xs font-semibold">Hari Ini: 14 Okt 2024</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTAINER CARD FORM -->
+      <div class="p-8 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-[24px] outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-6">
+        
+        <!-- TOP NAV & BADGE STATUS -->
+        <div class="flex justify-between items-center w-full">
+          <a href="BookingWalkIn.html" class="flex items-center gap-2 text-[#0891B2] text-xs font-semibold hover:underline">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Kembali ke detail booking</span>
+          </a>
+          <div class="px-3 py-2 bg-[#ECF9FC] rounded-lg flex items-center gap-2">
+            <span class="text-[#0F597A] text-xs font-semibold">Walk-in • Belum dibayar</span>
+          </div>
+        </div>
+
+        <!-- STEPPER WIZARD -->
+        <div class="flex items-center gap-4 text-xs">
+          <!-- Step 1 -->
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-[#E9EDF2] text-[#6C6287] rounded-full flex justify-center items-center font-bold">1</div>
+            <span class="text-[#6C6287] font-semibold">Detail booking</span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          
+          <!-- Step 2 (Aktif) -->
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-[#0891B2] text-white rounded-full flex justify-center items-center font-bold">2</div>
+            <span class="text-[#0F597A] font-semibold">Pembayaran</span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+
+          <!-- Step 3 -->
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-[#E9EDF2] text-[#6C6287] rounded-full flex justify-center items-center font-bold">3</div>
+            <span class="text-[#6C6287] font-semibold">Selesai</span>
+          </div>
+        </div>
+
+        <!-- SUMMARY CARD ORDER -->
+        <div class="p-6 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-6">
+          <h2 class="text-center text-[#6366F1] text-lg font-bold">Ringkasan Pesanan</h2>
+          
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="text-[#2B2544] text-lg font-bold">Couple & Friends</div>
+              <div class="text-[#6C6287] text-sm">Pelanggan: Nadia Putri</div>
+            </div>
+            <div class="text-[#6366F1] text-2xl font-bold">Rp 750.000</div>
+          </div>
+
+          <div class="flex flex-col gap-3 text-xs">
+            <div class="flex gap-2.5 items-start">
+              <div class="w-4 h-4 mt-0.5 text-[#0891B2] shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <span class="text-[#6C6287] text-[11px]">Pelanggan</span>
+                <p class="font-semibold text-[#2B2544]">Nadia Putri • 2 orang • 0812 3456 7890</p>
+              </div>
+            </div>
+
+            <div class="flex gap-2.5 items-start">
+              <div class="w-4 h-4 mt-0.5 text-[#0891B2] shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="flex flex-col gap-0.5">
+                <span class="text-[#6C6287] text-[11px]">Tanggal dan waktu</span>
+                <p class="font-semibold text-[#2B2544]">14 Oktober 2024<br>13.00–14.00 WIB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHOD SELECTION -->
+        <div class="flex flex-col gap-4">
+          <h2 class="text-[#2B2544] text-sm font-bold">Pilih Metode Pembayaran</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Method 1: QRIS -->
+            <div class="p-6 bg-[#FAF9F6] outline outline-1 outline-[#EAE6FA] -outline-offset-1 rounded-2xl flex flex-col justify-between items-center gap-4">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-[#A39BBF] rounded-full"></span>
+                <span class="text-[#6C6287] font-bold text-sm">QRIS E-Wallet</span>
+              </div>
+              <div class="w-[160px] h-[160px] p-3 bg-[#ECFEFF] rounded-xl flex items-center justify-center">
+                <img src="https://placehold.co/136x136" alt="QRIS Code" class="w-[136px] h-[136px]" />
+              </div>
+              <p class="text-center text-[#6C6287] text-xs font-semibold">QRIS tersedia sebagai alternatif</p>
+            </div>
+
+            <!-- Method 2: CASH (Selected) -->
+            <div class="p-6 bg-white outline outline-2 outline-[#0891B2] -outline-offset-2 rounded-2xl flex flex-col justify-between gap-4">
+              <div class="flex items-center justify-center gap-2">
+                <span class="w-2 h-2 bg-[#06B6D4] rounded-full"></span>
+                <span class="text-[#2B2544] font-bold text-sm">Uang Tunai (Cash)</span>
+              </div>
+
+              <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                  <label class="text-[#6C6287] text-[11px] font-semibold">Nominal Diterima</label>
+                  <div class="px-3 py-2.5 bg-white rounded-lg outline outline-1 outline-[#EAE6FA] -outline-offset-1">
+                    <input type="number" id="cashInput" value="800000" oninput="calculateChange()" class="w-full text-[#2B2544] text-sm font-semibold focus:outline-none bg-transparent" />
+                  </div>
+                </div>
+                
+                <div class="flex flex-col gap-2">
+                  <label class="text-[#6C6287] text-[11px] font-semibold">Uang Kembali</label>
+                  <div class="px-3 py-2.5 bg-[#EC4899]/13 rounded-lg text-[#EC4899] text-sm font-bold" id="changeOutput">
+                    Rp 50.000
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-center text-[#6C6287] text-xs font-semibold">Terima pembayaran dahulu, lalu lanjutkan ke konfirmasi.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- BREAKDOWN COST -->
+        <div class="p-6 bg-white outline outline-1 outline-[#E5E7EB] -outline-offset-1 rounded-2xl flex flex-col gap-4">
+          <h2 class="text-[#2B2544] text-sm font-bold">Rincian Biaya</h2>
+          <div class="flex flex-col gap-3 text-xs">
+            <div class="flex justify-between items-center">
+              <span class="text-[#6C6287]">Couple & Friends</span>
+              <span class="font-semibold text-[#2B2544]">Rp650.000</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-[#6C6287]">Biaya layanan</span>
+              <span class="font-semibold text-[#2B2544]">Rp0</span>
+            </div>
+          </div>
+          <div class="pt-[18px] border-t border-[#E5E7EB] flex justify-between items-center">
+            <span class="text-[#2B2544] font-bold text-sm">Total biaya</span>
+            <span class="text-[#0F597A] text-[25px] font-bold">Rp750.000</span>
+          </div>
+        </div>
+
+        <!-- SUBMIT CONFIRMATION BUTTON -->
+        <a href="BookingSelesai.html" class="w-full py-4 bg-[#0891B2] hover:bg-[#06748f] transition-colors text-white font-bold rounded-2xl text-center text-base shadow-md">
+          Konfirmasi & Cetak Nota
+        </a>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- JAVASCRIPT HITUNG KEMBALIAN AUTOMATIS -->
+  <script>
+    const totalPrice = 750000;
+
+    function calculateChange() {
+      const cashInput = document.getElementById('cashInput').value;
+      const changeOutput = document.getElementById('changeOutput');
+      const change = cashInput - totalPrice;
+
+      if (change >= 0) {
+        changeOutput.innerText = 'Rp ' + change.toLocaleString('id-ID');
+        changeOutput.className = 'px-3 py-2.5 bg-[#EC4899]/13 rounded-lg text-[#EC4899] text-sm font-bold';
+      } else {
+        changeOutput.innerText = 'Uang Kurang Rp ' + Math.abs(change).toLocaleString('id-ID');
+        changeOutput.className = 'px-3 py-2.5 bg-red-100 rounded-lg text-red-600 text-sm font-bold';
+      }
+    }
+  </script>
+
+</body>
+</html>
