@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'koneksi.php';
+include '../koneksi.php';
 
 // Ambil data paket foto dari database (Fallback ke array jika tabel belum diisi)
 $query_paket = mysqli_query($conn, "SELECT * FROM paket_foto");
@@ -65,6 +65,7 @@ if ($query_paket && mysqli_num_rows($query_paket) > 0) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: 'Inter', sans-serif; }
   </style>
@@ -76,8 +77,8 @@ if ($query_paket && mysqli_num_rows($query_paket) > 0) {
     
     <!-- Logo Brand -->
     <a href="web_informasi.php" class="flex items-center gap-2 shrink-0">
-      <img src="asset/logo.jpeg" alt="Logo SUMAVIS" class="w-8 h-8 rounded-lg object-cover shadow-sm border border-[#0891B2]/20" />
-      <span class="text-[#0C4A6E] text-lg font-extrabold tracking-tight">SUMAVIS</span>
+      <img src="asset/logo.jpeg" alt="Logo SIMAVIS" class="w-8 h-8 rounded-lg object-cover shadow-sm border border-[#0891B2]/20" />
+      <span class="text-[#0C4A6E] text-lg font-extrabold tracking-tight">SIMAVIS</span>
     </a>
 
     <!-- Menu Links -->
@@ -126,7 +127,7 @@ if ($query_paket && mysqli_num_rows($query_paket) > 0) {
         </h1>
 
         <p class="text-[#64748B] text-xs lg:text-sm leading-relaxed max-w-[440px]">
-          Ruang untuk menjadi diri sendiri. Abadikan potret, kebersamaan, dan karya Anda bersama tim kreatif SUMAVIS di Vibes Studio Jatibarang.<br/><br/>
+          Ruang untuk menjadi diri sendiri. Abadikan potret, kebersamaan, dan karya Anda bersama tim kreatif SIMAVIS di Vibes Studio Jatibarang.<br/><br/>
           Informasi studio, tema, paket, dan galeri dapat dilihat tanpa login. Untuk booking dan akses riwayat, masuk ke akun Anda.
         </p>
 
@@ -158,7 +159,7 @@ if ($query_paket && mysqli_num_rows($query_paket) > 0) {
       <div class="flex-1 w-full h-[380px] relative rounded-2xl overflow-hidden shadow-sm bg-white p-2 border border-[#E2E8F0]">
         <img class="w-full h-full object-cover rounded-xl" src="asset/vibes.jpeg" alt="Vibes Studio Jatibarang" />
         <div class="absolute top-6 left-6 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[#0891B2] text-[10px] font-bold shadow-xs">
-          YOUR MOMENT, OUR LENS · SUMAVIS
+          YOUR MOMENT, OUR LENS · SIMAVIS
         </div>
         <div class="absolute bottom-4 left-4 right-4 p-3.5 bg-white/95 backdrop-blur-md shadow-md rounded-xl border border-[#E2E8F0] flex justify-between items-center">
           <div class="flex flex-col gap-0.5">
@@ -452,42 +453,73 @@ if ($query_paket && mysqli_num_rows($query_paket) > 0) {
 
   </main>
 
-  <!-- ================= 9. FOOTER ================= -->
-  <footer class="px-6 lg:px-12 pt-10 pb-5 bg-white border-t border-[#E2E8F0]">
-    <div class="max-w-[1140px] mx-auto flex flex-col gap-8">
+<!-- ================= 9. FOOTER ================= -->
+<footer class="px-6 lg:px-12 pt-10 pb-5 bg-white border-t border-[#E2E8F0]">
+  <div class="max-w-[1140px] mx-auto flex flex-col gap-8">
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8">
       
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-        <div class="md:col-span-4 flex flex-col gap-3">
-          <div class="flex items-center gap-2">
-            <img src="asset/logo.jpeg" alt="Logo" class="w-8 h-8 rounded-lg object-cover" />
-            <span class="text-[#0C4A6E] text-lg font-extrabold tracking-tight">SUMAVIS</span>
-          </div>
-          <p class="text-[#64748B] text-xs leading-relaxed">Sistem Manajemen Informasi Studio Foto untuk Vibes Studio Jatibarang. Dari informasi studio, tema, paket, galeri, booking, hingga riwayat, semuanya dalam satu tempat.</p>
+      <!-- Logo & Deskripsi -->
+      <div class="md:col-span-4 flex flex-col gap-3">
+        <div class="flex items-center gap-2">
+          <img src="asset/logo.jpeg" alt="Logo SIMAVIS" class="w-8 h-8 rounded-lg object-cover" onerror="this.src='https://placehold.co/32x32'" />
+          <span class="text-[#0C4A6E] text-lg font-extrabold tracking-tight">SIMAVIS</span>
         </div>
+        <p class="text-[#64748B] text-xs leading-relaxed">Sistem Manajemen Informasi Studio Foto untuk Vibes Studio Jatibarang. Dari informasi studio, tema, paket, galeri, booking, hingga riwayat, semuanya dalam satu tempat.</p>
+      </div>
 
-        <div class="md:col-span-2 flex flex-col gap-2 text-xs">
-          <span class="text-[#0C4A6E] font-semibold">Jelajahi studio</span>
-          <a href="#paket" class="text-[#64748B] hover:text-[#0891B2]">Paket & harga</a>
-          <a href="#galeri" class="text-[#64748B] hover:text-[#0891B2]">Portofolio</a>
-        </div>
+      <!-- Navigasi Cepat -->
+      <div class="md:col-span-2 flex flex-col gap-2 text-xs">
+        <span class="text-[#0C4A6E] font-bold">Jelajahi studio</span>
+        <a href="#paket" class="text-[#64748B] hover:text-[#0891B2] transition-colors">Paket & harga</a>
+        <a href="#galeri" class="text-[#64748B] hover:text-[#0891B2] transition-colors">Portofolio</a>
+      </div>
 
-        <div class="md:col-span-3 flex flex-col gap-2 text-xs">
-          <span class="text-[#0C4A6E] font-semibold">Temui kami</span>
-          <p class="text-[#64748B] leading-relaxed">Vibes Studio<br/>Jatibarang</p>
-        </div>
-
-        <div class="md:col-span-3 flex flex-col gap-2 text-xs">
-          <span class="text-[#0C4A6E] font-semibold">Jam operasional</span>
-          <p class="text-[#64748B] leading-relaxed">09.00 – 21.00 WIB</p>
+      <!-- Media Sosial & Kontak (Ditambahkan Lengkap) -->
+      <div class="md:col-span-3 flex flex-col gap-2.5 text-xs">
+        <span class="text-[#0C4A6E] font-bold">Hubungi & Ikuti Kami</span>
+        <div class="flex flex-col gap-2 text-[#64748B]">
+          <!-- Instagram -->
+          <a href="https://instagram.com/vibesstudio" target="_blank" class="flex items-center gap-2.5 hover:text-[#0891B2] transition-colors group">
+            <i class="fa-brands fa-instagram text-sm text-[#0891B2] w-4 text-center group-hover:scale-110 transition-transform"></i>
+            <span>@vibesstudio</span>
+          </a>
+          <!-- WhatsApp -->
+          <a href="https://wa.me/6281234567890" target="_blank" class="flex items-center gap-2.5 hover:text-[#0891B2] transition-colors group">
+            <i class="fa-brands fa-whatsapp text-sm text-[#0891B2] w-4 text-center group-hover:scale-110 transition-transform"></i>
+            <span>+62 812-3456-7890</span>
+          </a>
+          <!-- TikTok -->
+          <a href="https://tiktok.com/@vibesstudio" target="_blank" class="flex items-center gap-2.5 hover:text-[#0891B2] transition-colors group">
+            <i class="fa-brands fa-tiktok text-sm text-[#0891B2] w-4 text-center group-hover:scale-110 transition-transform"></i>
+            <span>@vibesstudio</span>
+          </a>
+          <!-- Email -->
+          <a href="mailto:info@vibesstudio.com" class="flex items-center gap-2.5 hover:text-[#0891B2] transition-colors group">
+            <i class="fa-solid fa-envelope text-sm text-[#0891B2] w-4 text-center group-hover:scale-110 transition-transform"></i>
+            <span>info@vibesstudio.com</span>
+          </a>
         </div>
       </div>
 
-      <div class="pt-4 border-t border-[#E2E8F0] flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-[#64748B]">
-        <span>© 2026 SUMAVIS. Setiap momen punya cerita.</span>
+      <!-- Jam Operasional & Lokasi -->
+      <div class="md:col-span-3 flex flex-col gap-2 text-xs">
+        <span class="text-[#0C4A6E] font-bold">Lokasi & Jam Kerja</span>
+        <p class="text-[#64748B] leading-relaxed">
+          <i class="fa-solid fa-location-dot text-[#0891B2] mr-1"></i> Vibes Studio Jatibarang<br/>
+          <i class="fa-solid fa-clock text-[#0891B2] mr-1 mt-1"></i> 09.00 – 21.00 WIB
+        </p>
       </div>
 
     </div>
-  </footer>
+
+    <!-- Copyright Bar -->
+    <div class="pt-4 border-t border-[#E2E8F0] flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-[#64748B]">
+      <span>© 2026 SIMAVIS. Setiap momen punya cerita.</span>
+    </div>
+
+  </div>
+</footer>
 
   <!-- JAVASCRIPT UNTUK TOGGLE GALERI TAMBAHAN -->
   <script>

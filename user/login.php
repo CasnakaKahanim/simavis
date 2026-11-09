@@ -56,46 +56,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow: hidden; }
+    body { font-family: 'Inter', sans-serif; }
     .font-outfit { font-family: 'Outfit', sans-serif; }
   </style>
 </head>
-<body class="bg-gray-100 flex h-screen w-screen overflow-hidden">
+<body class="bg-gray-100 min-h-screen w-full flex flex-col lg:flex-row">
 
-  <div class="w-full h-full flex flex-col lg:flex-row overflow-hidden">
+  <div class="w-full min-h-screen flex flex-col lg:flex-row">
     
     <!-- KOLOM KIRI (BRAND / BANNER) -->
-    <div class="w-full lg:w-[40%] xl:w-[546px] h-full p-8 lg:p-12 flex flex-col justify-between items-center text-center flex-shrink-0"
+    <div class="w-full lg:w-[40%] xl:w-[546px] p-8 lg:p-12 flex flex-col justify-between items-center text-center flex-shrink-0 py-12 lg:py-12"
          style="background: linear-gradient(180deg, #0D4D66 0%, #083347 100%);">
-      <div class="h-4"></div>
+      <div class="hidden lg:block h-4"></div>
       <div class="flex flex-col items-center gap-6 my-auto">
-        <div class="w-32 h-32 lg:w-40 lg:h-40 shadow-2xl rounded-[32px] bg-[#0891B2]/20 border border-[#0891B2]/30 flex justify-center items-center backdrop-blur-sm"
+        <div class="w-24 h-24 lg:w-40 lg:h-40 shadow-2xl rounded-[28px] lg:rounded-[32px] bg-[#0891B2]/20 border border-[#0891B2]/30 flex justify-center items-center backdrop-blur-sm"
              style="box-shadow: 0px 12px 24px rgba(8, 145, 178, 0.25);">
-          <span class="text-[#0891B2] text-6xl lg:text-8xl font-outfit font-black select-none">S</span>
+          <span class="text-[#0891B2] text-5xl lg:text-8xl font-outfit font-black select-none">S</span>
         </div>
         <div class="flex flex-col gap-1.5">
-          <h1 class="text-white text-3xl lg:text-4xl font-outfit font-extrabold tracking-tight">SIMAVIS</h1>
+          <h1 class="text-white text-2xl lg:text-4xl font-outfit font-extrabold tracking-tight">SIMAVIS</h1>
           <p class="text-[#67E8F9] text-xs font-medium uppercase tracking-wider">
             Sistem Manajemen Informasi Studio Foto
           </p>
         </div>
       </div>
-      <div class="text-white text-xs lg:text-sm font-semibold">
+      <div class="text-white text-xs lg:text-sm font-semibold pt-6 lg:pt-0">
         Vibes Studio Foto Jatibarang
       </div>
     </div>
 
     <!-- KOLOM KANAN (FORM LOGIN / AUTO-REGISTER) -->
-    <div class="flex-1 h-full p-6 lg:p-12 flex flex-col justify-between items-center relative bg-cover bg-center overflow-hidden"
+    <div class="flex-1 p-6 lg:p-12 flex flex-col justify-between items-center relative bg-cover bg-center min-h-[500px] lg:min-h-screen"
          style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%), url('https://placehold.co/820x768');">
-      <div class="h-2"></div>
+      <div class="hidden lg:block h-2"></div>
 
       <!-- Glassmorphism Form Card -->
-      <div class="w-full max-w-[460px] p-8 sm:p-10 bg-white/70 backdrop-blur-md shadow-xl rounded-3xl border border-white/60 flex flex-col gap-6 my-auto">
+      <div class="w-full max-w-[460px] p-6 sm:p-10 bg-white/80 lg:bg-white/70 backdrop-blur-md shadow-xl rounded-3xl border border-white/60 flex flex-col gap-6 my-auto my-8 lg:my-auto">
         
         <div class="flex flex-col gap-2">
-          <h2 class="text-[#0C4A6E] text-3xl font-outfit font-extrabold">Selamat Datang!</h2>
-          <p class="text-[#64748B] text-sm font-normal leading-relaxed">
+          <h2 class="text-[#0C4A6E] text-2xl lg:text-3xl font-outfit font-extrabold">Selamat Datang!</h2>
+          <p class="text-[#64748B] text-xs lg:text-sm font-normal leading-relaxed">
             Masukkan data Anda. Jika belum terdaftar, akun akan dibuatkan otomatis.
           </p>
         </div>
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       </div>
 
-      <div class="flex items-center gap-2 text-[#64748B] text-xs font-normal">
+      <div class="flex items-center gap-2 text-[#64748B] text-xs font-normal pb-4 lg:pb-0">
         <span>v2.0.1</span>
         <span class="w-1 h-1 bg-[#64748B]/50 rounded-full"></span>
         <span>Vibes Studio Foto Jatibarang</span>

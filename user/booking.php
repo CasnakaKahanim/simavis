@@ -32,29 +32,42 @@ $query_pelanggan_data = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id = 
 $data_plg = mysqli_fetch_assoc($query_pelanggan_data);
 $query_paket = mysqli_query($conn, "SELECT * FROM paket_foto");
 
-// 3. Simpan data booking
+// 3. Simpan data booking sementara ke Session lalu alihkan ke pembayaran.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama_lengkap  = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);$no_whatsapp   = mysqli_real_escape_string($conn,$_POST['no_whatsapp']);
-    $email         = mysqli_real_escape_string($conn, $_POST['email']);$jumlah_peserta= mysqli_real_escape_string($conn,$_POST['jumlah_peserta']);
-    $nama_paket    = mysqli_real_escape_string($conn, $_POST['nama_paket']);$harga_paket   = intval($_POST['harga_paket']);$biaya_tambahan= 0;
-    $total_harga   = $harga_paket +$biaya_tambahan;
-    $tanggal_sesi  = mysqli_real_escape_string($conn, $_POST['tanggal_sesi']);$jam_sesi      = mysqli_real_escape_string($conn,$_POST['jam_sesi']);
-    $catatan       = mysqli_real_escape_string($conn, $_POST['catatan']);$kode_booking  = "SMV-" . date('ymd') . "-" . rand(100, 999);
-    $status_pembayaran = "Lunas";
-    $status_sesi   = "Mendatang";
+    $nama_lengkap   = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);$no_whatsapp    = mysqli_real_escape_string($conn,$_POST['no_whatsapp']);
+    $email          = mysqli_real_escape_string($conn, $_POST['email']);$jumlah_peserta = mysqli_real_escape_string($conn,$_POST['jumlah_peserta']);
+    $nama_paket     = mysqli_real_escape_string($conn, $_POST['nama_paket']);$harga_paket    = intval($_POST['harga_paket']);$biaya_tambahan = 0;
+    $total_harga    = $harga_paket +$biaya_tambahan;
+    $tanggal_sesi   = mysqli_real_escape_string($conn, $_POST['tanggal_sesi']);$jam_sesi       = mysqli_real_escape_string($conn,$_POST['jam_sesi']);
+    $catatan        = mysqli_real_escape_string($conn, $_POST['catatan']);$kode_booking   = "SMV-" . date('ymd') . "-" . rand(100, 999);
 
     // Proteksi backend: Cek ganda apakah jam tersebut mendadak sudah diambil orang lain
     $cek_double = mysqli_query($conn, "SELECT id FROM booking WHERE tanggal_sesi = '$tanggal_sesi' AND jam_sesi = '$jam_sesi'");
     
     if (mysqli_num_rows($cek_double) > 0) {$error = "Maaf! Jam sesi $jam_sesi pada tanggal tersebut baru saja dipesan oleh orang lain. Silakan pilih jam lain.";
-    } elseif (!empty($nama_lengkap) && !empty($no_whatsapp) && !empty($nama_paket) && !empty($tanggal_sesi) && !empty($jam_sesi)) {$query_insert = "INSERT INTO booking (id_pelanggan, nama_lengkap, no_whatsapp, email, jumlah_peserta, nama_paket, harga_paket, biaya_tambahan, total_harga, tanggal_sesi, jam_sesi, kode_booking, status_pembayaran, status_sesi) 
-                         VALUES ('$id_pelanggan', '$nama_lengkap', '$no_whatsapp', '$email', '$jumlah_peserta', '$nama_paket', '$harga_paket', '$biaya_tambahan', '$total_harga', '$tanggal_sesi', '$jam_sesi', '$kode_booking', '$status_pembayaran', '$status_sesi')";
+    } elseif (!empty($nama_lengkap) && !empty($no_whatsapp) && !empty($nama_paket) && !empty($tanggal_sesi) && !empty($jam_sesi)) {
         
-        if (mysqli_query($conn, $query_insert)) {$sukses = "Booking berhasil! Mengalihkan ke riwayat akun...";
-            header("refresh:2;url=akun.php");
-        } else {
-            $error = "Gagal menyimpan booking: " . mysqli_error($conn);
-        }
+        // Simpan ke session booking_data agar dibaca di pembayaran.php
+        $_SESSION['booking_data'] = [
+            'id_pelanggan'   => $id_pelanggan,
+            'kode_booking'   => $kode_booking,
+            'nama_lengkap'   => $nama_lengkap,
+            'no_whatsapp'    => $no_whatsapp,
+            'email'          => $email,
+            'jumlah_peserta' => $jumlah_peserta,
+            'nama_paket'     => $nama_paket,
+            'harga_paket'    => $harga_paket,
+            'biaya_tambahan' => $biaya_tambahan,
+            'total_harga'    => $total_harga,
+            'tanggal_sesi'   => $tanggal_sesi,
+            'jam_sesi'       => $jam_sesi,
+            'catatan'        => $catatan
+        ];
+
+        // Alihkan ke halaman pembayaran
+        header("Location: pembayaran.php");
+        exit;
+
     } else {
         $error = "Mohon lengkapi semua data wajib termasuk pilihan jam sesi!";
     }
@@ -68,6 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIMAVIS - Booking Sesi Foto</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -103,9 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <h1 class="text-xl sm:text-2xl font-bold mb-6 text-[#0C4A6E]">Booking sesi foto di Vibes Studio Jatibarang</h1>
 
-    <?php if (!empty($sukses)) { ?>
-      <div class="mb-6 p-4 bg-[#EAF7F1] border border-[#16795E]/30 text-[#16795E] text-xs rounded-xl font-medium"><?= $sukses; ?></div>
-    <?php } ?>
     <?php if (!empty($error)) { ?>
       <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 text-xs rounded-xl font-medium"><?= $error; ?></div>
     <?php } ?>
@@ -115,10 +126,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <!-- KOLOM KIRI -->
       <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-8">
         
-        <!-- STEP 2: DETAIL SESI / PAKET -->
+        <!-- DETAIL SESI / PAKET -->
         <div class="p-6 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xs flex flex-col gap-4">
           <div class="flex items-center gap-3">
-            <span class="w-6 h-6 rounded-full bg-[#E6F7F8] text-[#0891B2] font-bold text-xs flex items-center justify-center">2</span>
+            <span class="w-6 h-6 rounded-full bg-[#E6F7F8] text-[#0891B2] font-bold text-xs flex items-center justify-center">1</span>
             <h2 class="font-semibold text-sm">Detail sesi</h2>
           </div>
           <p class="text-xs text-[#64748B] -mt-2">Pilih paket untuk melihat jadwal dan estimasi durasi foto.</p>
@@ -143,14 +154,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- STEP 3: KALENDER TANGGAL & SESI JAM DINAMIS -->
         <div class="p-6 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xs flex flex-col gap-4">
           <div class="flex items-center gap-3">
-            <span class="w-6 h-6 rounded-full bg-[#E6F7F8] text-[#0891B2] font-bold text-xs flex items-center justify-center">3</span>
+            <span class="w-6 h-6 rounded-full bg-[#E6F7F8] text-[#0891B2] font-bold text-xs flex items-center justify-center">2</span>
             <h2 class="font-semibold text-sm">Kapan Anda ingin berfoto?</h2>
           </div>
           <p class="text-xs text-[#64748B] -mt-2">Semua jadwal dalam Waktu Indonesia Barat (WIB).</p>
 
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-2 items-start">
             
-            <!-- Tanggal Input / Mini Selector -->
+            <!-- Tanggal Input -->
             <div class="md:col-span-5 flex flex-col gap-2">
               <label class="text-xs font-semibold text-[#0C4A6E]">Pilih Tanggal Sesi</label>
               <input type="date" 
@@ -190,7 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- STEP 4: DATA CLIENT -->
         <div class="p-6 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xs flex flex-col gap-4">
           <div class="flex items-center gap-3">
-            <span class="w-6 h-6 rounded-full bg-[#E6F7F8] text-[#0891B2] font-bold text-xs flex items-center justify-center">4</span>
+            <span class="w-6 h-6 rounded-full bg-[#E6F7F8] text-[#0891B2] font-bold text-xs flex items-center justify-center">3</span>
             <h2 class="font-semibold text-sm">Siapa yang akan datang?</h2>
           </div>
           <p class="text-xs text-[#64748B] -mt-2">Data ini digunakan untuk konfirmasi dan pengingat sesi.</p>
@@ -239,11 +250,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <span id="summaryPaket">Pilih paket di samping</span>
               <span id="summaryHarga">Rp 0</span>
             </div>
+            
+            <!-- Mengganti emoji kalender dengan Font Awesome -->
             <div class="flex justify-between items-center">
-              <span>📅 Sesi Terpilih:</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-calendar-days text-[#0891B2]"></i> Sesi Terpilih:</span>
               <span id="summaryJadwal" class="font-bold text-[#0891B2]">Belum memilih jam</span>
             </div>
-            <div class="flex items-center gap-2"><span>📍 Vibes Studio, Jatibarang</span></div>
+            
+            <!-- Mengganti emoji pin lokasi dengan Font Awesome -->
+            <div class="flex items-center gap-2">
+              <span><i class="fa-solid fa-location-dot text-[#0891B2]"></i> Vibes Studio, Jatibarang</span>
+            </div>
           </div>
 
           <hr class="border-[#E2E8F0]">
@@ -260,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
 
           <button type="submit" class="w-full py-3.5 bg-[#0891B2] hover:bg-[#06748f] text-white text-xs font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
-            <span>Konfirmasi & Simpan Booking</span>
+            <span>Lanjut ke Pembayaran</span>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </button>
 
@@ -273,7 +290,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- JAVASCRIPT UNTUK SLOT JAM & CEK DATABASE -->
   <script>
-    // Daftar Pilihan Jam Studio
     const masterSlotJam = [
       "09.00 - 09.15",
       "10.30 - 10.45",
@@ -284,19 +300,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       "17.30 - 17.45"
     ];
 
-    // Ambil elemen tanggal saat ini saat halaman dimuat
     window.addEventListener('DOMContentLoaded', () => {
       const initialDate = document.getElementById('tanggalSesiInput').value;
       loadSlotJam(initialDate);
     });
 
-    // Fungsi Ajax Fetch Slot
     function loadSlotJam(tanggal) {
       const grid = document.getElementById('gridJamSesi');
       const statusInfo = document.getElementById('statusSlotInfo');
       const jamInput = document.getElementById('jamSesiInput');
       
-      jamInput.value = ""; // Reset pilihan jam
+      jamInput.value = ""; 
       document.getElementById('summaryJadwal').innerText = "Pilih jam sesi";
       grid.innerHTML = '<span class="text-xs text-gray-400 col-span-3">Mengecek ketersediaan jam...</span>';
 
@@ -314,12 +328,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             btn.className = 'py-2.5 px-3 rounded-xl border border-[#E2E8F0] text-xs font-semibold transition-all text-center';
 
             if (isBooked) {
-              // Jika sudah dipesan: Nonaktifkan & Coret (seperti di gambar)
               btn.classList.add('slot-disabled');
               btn.disabled = true;
               btn.title = 'Sudah dipesan oleh orang lain';
             } else {
-              // Jika masih kosong: Bisa diklik
               slotTersediaCount++;
               btn.classList.add('hover:border-[#0891B2]', 'hover:text-[#0891B2]', 'bg-white', 'text-[#0C4A6E]');
               btn.onclick = () => selectJam(btn, jam);
@@ -335,25 +347,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     }
 
-    // Fungsi saat user mengeklik tombol jam yang tersedia
     function selectJam(buttonElem, jamValue) {
-      // Clear style pilihan jam sebelumnya
       const allButtons = document.querySelectorAll('#gridJamSesi button:not(.slot-disabled)');
       allButtons.forEach(btn => {
         btn.classList.remove('slot-selected');
         btn.classList.add('bg-white', 'text-[#0C4A6E]');
       });
 
-      // Highlight tombol yang baru dipilih
       buttonElem.classList.remove('bg-white', 'text-[#0C4A6E]');
       buttonElem.classList.add('slot-selected');
 
-      // Set value ke hidden input & summary card
       document.getElementById('jamSesiInput').value = jamValue;
       document.getElementById('summaryJadwal').innerText = jamValue;
     }
 
-    // Update Summary Paket & Total Biaya
     function updateSummary(radio) {
       var namaPaket = radio.value;
       var harga = parseInt(radio.getAttribute('data-harga')) || 0;
