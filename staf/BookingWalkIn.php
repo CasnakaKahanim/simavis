@@ -29,29 +29,6 @@ if (!$res_paket) {
     $res_paket = mysqli_query($conn, $q_paket);
 }
 
-// Set paket default yang terpilih
-$paket_terpilih = isset($_POST['id_paket']) ? $_POST['id_paket'] : 2;
-
-// 4. AMBIL LIST JAM SESI YANG SUDAH TERPAKAI/BOOKING HARI INI
-$tgl_hari_ini = date('Y-m-d');
-$jam_terpakai = [];
-$q_jam_booked = mysqli_query($conn, "SELECT jam_sesi FROM booking WHERE DATE(tanggal_sesi) = '$tgl_hari_ini' AND status_pembayaran != 'Batal'");
-
-if ($q_jam_booked) {
-    while ($row_jam = mysqli_fetch_assoc($q_jam_booked)) {
-        if (!empty($row_jam['jam_sesi'])) {
-            $jam_terpakai[] = trim($row_jam['jam_sesi']);
-        }
-    }
-}
-
-// Daftar slot jam sesi operasional studio
-$slot_jam_studio = [
-    '09:00 WIB', '10:00 WIB', '11:00 WIB', '13:00 WIB', 
-    '14:00 WIB', '15:00 WIB', '16:00 WIB', '17:00 WIB', 
-    '19:00 WIB', '20:00 WIB'
-];
-
 // Total order untuk badge sidebar
 $q_total_order = mysqli_query($conn, "SELECT COUNT(*) AS total FROM booking");
 $r_total_order = mysqli_fetch_assoc($q_total_order);
@@ -154,11 +131,11 @@ $total_order_badge = $r_total_order['total'] ?? 0;
       <div class="flex justify-between items-center w-full">
         <div class="flex flex-col gap-1">
           <a href="dashboard.php" class="flex items-center gap-2 text-[#0891B2] text-xs font-semibold hover:underline w-fit">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span>Kembali ke dashboard</span>
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Kembali ke dashboard</span>
           </a>
           <h1 class="text-[#2B2544] text-2xl lg:text-[28px] font-bold">Booking Walk-in</h1>
-          <p class="text-[#6C6287] text-sm font-normal">Catat pelanggan, pilih sesi foto dan jam, lalu lanjutkan ke pembayaran.</p>
+          <p class="text-[#6C6287] text-sm font-normal">Catat pelanggan walk-in, pilih paket, tema dinamis, jumlah peserta, dan jam sesi.</p>
         </div>
         <div class="flex items-center gap-3">
           <div class="px-4 py-2 bg-white shadow-sm rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex items-center gap-2">
@@ -173,16 +150,16 @@ $total_order_badge = $r_total_order['total'] ?? 0;
       <!-- FORM & RINGKASAN GRID -->
       <form action="pembayaran.php" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- LEFT COLUMN: INPUT DATA, JAM & PAKET (8 COLS) -->
+        <!-- LEFT COLUMN: INPUT DATA, PAKET, TEMA, TANGGAL/JAM (8 COLS) -->
         <div class="lg:col-span-8 flex flex-col gap-6">
           
-          <!-- DATA PELANGGAN CARD -->
+          <!-- STEP 1: DATA PELANGGAN -->
           <div class="p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4">
             <h3 class="text-[#2B2544] text-base font-bold flex items-center gap-2">
               <i class="fa-solid fa-user text-[#0891B2]"></i>
-              <span>Data pelanggan</span>
+              <span>1. Data Pelanggan Walk-in</span>
             </h3>
-            <p class="text-xs text-[#6C6287]">Isi data pelanggan untuk pencatatan dan pengiriman hasil foto.</p>
+            <p class="text-xs text-[#6C6287]">Isi identitas pelanggan untuk pencatatan dan pengiriman hasil foto.</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div class="flex flex-col gap-1.5">
@@ -197,154 +174,183 @@ $total_order_badge = $r_total_order['total'] ?? 0;
                        class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-[#2B2544] focus:outline-none focus:border-[#0891B2]" />
               </div>
 
-              <div class="flex flex-col gap-1.5">
+              <div class="flex flex-col gap-1.5 sm:col-span-2">
                 <label class="text-xs font-semibold text-[#2B2544]">Email (opsional)</label>
                 <input type="email" name="email" placeholder="nadia.putri@email.com" value="nadia.putri@email.com"
                        class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-[#2B2544] focus:outline-none focus:border-[#0891B2]" />
               </div>
-
-              <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-semibold text-[#2B2544]">Jumlah peserta *</label>
-                <select name="jumlah_peserta" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-[#2B2544] focus:outline-none focus:border-[#0891B2]">
-                  <option value="1 orang">1 orang</option>
-                  <option value="2 orang" selected>2 orang</option>
-                  <option value="3-4 orang">3-4 orang</option>
-                  <option value="5+ orang">5+ orang</option>
-                </select>
-              </div>
             </div>
           </div>
 
-          <!-- PILIH WAKTU / JAM SESI CARD -->
+          <!-- STEP 2: PILIH PAKET FOTO -->
+          <div class="p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4">
+            <h3 class="text-[#2B2544] text-base font-bold flex items-center gap-2">
+              <i class="fa-solid fa-camera text-[#0891B2]"></i>
+              <span>2. Pilih Paket Sesi Foto</span>
+            </h3>
+            <p class="text-xs text-[#6C6287]">Pilih Vibes Package yang ingin diambil.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <?php 
+              while ($pkt = mysqli_fetch_assoc($res_paket)) {
+                  $nama_p = $pkt['nama_paket'] ?? $pkt['nama'] ?? 'Paket';
+                  $harga_p = $pkt['harga'] ?? 0;
+                  
+                  // Tentukan tipe paket untuk tema & kapasitas dasar
+                  $tipe_key = 'couple';
+                  $base_kapasitas = 2;
+                  if (stripos($nama_p, 'Bestie') !== false) { $tipe_key = 'bestie'; $base_kapasitas = 3; }
+                  elseif (stripos($nama_p, 'Gang') !== false) { $tipe_key = 'gang'; $base_kapasitas = 5; }
+              ?>
+              <label class="p-4 border rounded-xl cursor-pointer flex flex-col justify-between gap-3 bg-gray-50 border-gray-200 hover:border-[#0891B2] transition-all has-[:checked]:border-[#0891B2] has-[:checked]:bg-[#ECFEFF]">
+                <div class="flex justify-between items-start">
+                  <span class="font-bold text-xs text-[#2B2544]"><?= htmlspecialchars($nama_p); ?></span>
+                  <input type="radio" 
+                         name="nama_paket" 
+                         value="<?= htmlspecialchars($nama_p); ?>" 
+                         data-harga="<?= $harga_p; ?>" 
+                         data-basekap="<?= $base_kapasitas; ?>"
+                         data-tipe="<?= $tipe_key; ?>"
+                         class="accent-[#0891B2]" 
+                         required 
+                         onchange="updateSummary(this)">
+                </div>
+                <span class="text-[11px] text-[#6C6287]"><?= htmlspecialchars($pkt['kapasitas'] ?? 'Sesi studio'); ?></span>
+                <span class="text-xs font-extrabold text-[#0891B2]">Rp <?= number_format($harga_p, 0, ',', '.'); ?></span>
+              </label>
+              <?php } ?>
+            </div>
+            <input type="hidden" name="harga_paket" id="hargaInput" value="0">
+            <input type="hidden" name="biaya_tambahan" id="biayaTambahanInput" value="0">
+          </div>
+
+          <!-- STEP 3: PILIH TEMA & BACKGROUND DINAMIS -->
+          <div class="p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4">
+            <h3 class="text-[#2B2544] text-base font-bold flex items-center gap-2">
+              <i class="fa-solid fa-palette text-[#0891B2]"></i>
+              <span>3. Pilih Tema & Background</span>
+            </h3>
+            <p class="text-xs text-[#6C6287]">Pilihan tema menyesuaikan dengan paket yang dipilih.</p>
+
+            <div id="containerPilihanTema" class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <!-- Diisi otomatis oleh JavaScript -->
+            </div>
+            <input type="hidden" name="background" id="backgroundInput" value="Polkadot">
+          </div>
+
+          <!-- STEP 4: TANGGAL & JAM SESI HARI INI -->
           <div class="p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4">
             <div class="flex justify-between items-center">
               <h3 class="text-[#2B2544] text-base font-bold flex items-center gap-2">
                 <i class="fa-solid fa-clock text-[#0891B2]"></i>
-                <span>Pilih Jam Sesi Foto Hari Ini</span>
+                <span>4. Waktu & Jam Sesi Hari Ini</span>
               </h3>
               <span class="text-[11px] text-gray-500 font-medium">
                 <i class="fa-solid fa-circle text-rose-500 text-[8px] mr-1"></i>Merah: Terpakai
               </span>
             </div>
-            <p class="text-xs text-[#6C6287]">Pilih slot waktu yang masih tersedia untuk pelanggan walk-in.</p>
+            <p class="text-xs text-[#6C6287]">Pilih tanggal dan slot jam operasional studio.</p>
 
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
-              <?php 
-              $jam_terpilih_default = '';
-              foreach ($slot_jam_studio as $index => $jam_slot) :
-                $is_booked = in_array($jam_slot, $jam_terpakai);
-                // Pilih jam pertama yang belum ter-booking
-                if (!$is_booked && empty($jam_terpilih_default)) {
-                    $jam_terpilih_default = $jam_slot;
-                }
-              ?>
-              <label class="p-3 border rounded-xl flex flex-col items-center justify-center text-center cursor-pointer transition-colors relative <?= $is_booked ? 'bg-rose-50 border-rose-200 opacity-60 cursor-not-allowed' : 'bg-gray-50 border-gray-200 hover:border-[#0891B2] hover:bg-[#ECFEFF]'; ?>">
-                <input type="radio" name="jam_sesi" value="<?= $jam_slot; ?>" 
-                       <?= $is_booked ? 'disabled' : ($jam_slot === $jam_terpilih_default ? 'checked' : ''); ?> 
-                       class="accent-[#0891B2] mb-1">
-                <span class="font-bold text-xs <?= $is_booked ? 'text-rose-600 line-through' : 'text-[#2B2544]'; ?>"><?= $jam_slot; ?></span>
-                <span class="text-[10px] mt-0.5 <?= $is_booked ? 'text-rose-500 font-bold' : 'text-emerald-600 font-semibold'; ?>">
-                  <?= $is_booked ? 'Terpakai' : 'Tersedia'; ?>
-                </span>
-              </label>
-              <?php endforeach; ?>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start pt-2">
+              <div class="md:col-span-4 flex flex-col gap-1.5">
+                <label class="text-xs font-semibold text-[#2B2544]">Tanggal Sesi</label>
+                <input type="date" 
+                       id="tanggalSesiInput" 
+                       name="tanggal_sesi" 
+                       value="<?= date('Y-m-d'); ?>" 
+                       class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-[#2B2544] font-semibold focus:outline-none focus:border-[#0891B2]" 
+                       required 
+                       onchange="loadSlotJam(this.value)" />
+              </div>
+
+              <div class="md:col-span-8 flex flex-col gap-2">
+                <div class="flex justify-between items-center">
+                  <label class="text-xs font-semibold text-[#2B2544]">Pilih Jam Sesi</label>
+                  <span class="text-[11px] text-[#0891B2] font-medium" id="statusSlotInfo">Memuat slot...</span>
+                </div>
+                <div id="gridJamSesi" class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <!-- Diisi otomatis oleh AJAX/JS -->
+                </div>
+                <input type="hidden" name="jam_sesi" id="jamSesiInput" value="" required>
+              </div>
             </div>
           </div>
 
-          <!-- PILIH PAKET FOTO CARD -->
+          <!-- STEP 5: JUMLAH PESERTA DENGAN TOMBOL +/- OTOMATIS -->
           <div class="p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4">
             <h3 class="text-[#2B2544] text-base font-bold flex items-center gap-2">
-              <i class="fa-solid fa-camera text-[#0891B2]"></i>
-              <span>Pilih paket foto</span>
+              <i class="fa-solid fa-users text-[#0891B2]"></i>
+              <span>5. Jumlah Peserta</span>
             </h3>
-            <p class="text-xs text-[#6C6287]">Paket studio sesuai kebutuhan pelanggan.</p>
+            <p class="text-xs text-[#6C6287]">Gunakan tombol plus/minus untuk menambah jumlah orang (otomatis nambah biaya Rp 15.000/orang jika melebihi kapasitas dasar).</p>
 
-            <div class="grid grid-cols-1 gap-3 pt-2">
-              <?php 
-              if ($res_paket && mysqli_num_rows($res_paket) > 0) : 
-                while ($paket = mysqli_fetch_assoc($res_paket)) :
-                  $id_p    = $paket['id'] ?? $paket['id_paket'] ?? '';
-                  $nama_p  = $paket['nama_paket'] ?? $paket['nama'] ?? 'Paket Foto';
-                  $harga_p = $paket['harga'] ?? 0;
-                  $desk_p  = $paket['deskripsi'] ?? 'Sesi studio foto berkualitas.';
-                  $is_checked = ($id_p == $paket_terpilih || $nama_p == 'Couple & Friends');
-              ?>
-              <label class="p-4 border rounded-xl cursor-pointer flex items-start gap-3 transition-colors <?= $is_checked ? 'border-[#0891B2] bg-[#ECFEFF]' : 'border-gray-200 bg-white hover:bg-gray-50'; ?>">
-                <input type="radio" name="id_paket" value="<?= $id_p; ?>" <?= $is_checked ? 'checked' : ''; ?> class="accent-[#0891B2] mt-1">
-                <div class="flex flex-col gap-1 w-full">
-                  <div class="flex justify-between items-center w-full">
-                    <span class="font-bold text-sm text-[#2B2544]"><?= htmlspecialchars($nama_p); ?></span>
-                    <span class="font-bold text-sm text-[#0891B2]">Rp <?= number_format($harga_p, 0, ',', '.'); ?></span>
-                  </div>
-                  <p class="text-xs text-[#6C6287]"><?= htmlspecialchars($desk_p); ?></p>
-                </div>
-              </label>
-              <?php 
-                endwhile;
-              else : 
-              ?>
-              <label class="p-4 border-2 border-[#0891B2] bg-[#ECFEFF] rounded-xl cursor-pointer flex items-start gap-3">
-                <input type="radio" name="id_paket" value="1" checked class="accent-[#0891B2] mt-1">
-                <div class="flex flex-col gap-1 w-full">
-                  <div class="flex justify-between items-center w-full">
-                    <span class="font-bold text-sm text-[#2B2544]">Couple & Friends</span>
-                    <span class="font-bold text-sm text-[#0891B2]">Rp 650.000</span>
-                  </div>
-                  <p class="text-xs text-[#6C6287]">Chemistry dan tawa yang layak diabadikan. 60 menit • 2-4 orang.</p>
-                </div>
-              </label>
-              <?php endif; ?>
+            <div class="flex flex-col gap-2 pt-1 max-w-xs">
+              <div class="flex items-center h-11 bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+                <button type="button" onclick="ubahPeserta(-1)" class="w-12 h-full bg-gray-200 text-[#2B2544] font-bold hover:bg-gray-300 transition-colors flex items-center justify-center">
+                  <i class="fa-solid fa-minus text-xs"></i>
+                </button>
+                <input type="number" 
+                       id="jumlahPesertaInput" 
+                       name="jumlah_peserta" 
+                       min="1" 
+                       max="20" 
+                       value="2" 
+                       class="w-full h-full bg-transparent text-center text-xs font-bold text-[#2B2544] outline-none" 
+                       required 
+                       readonly />
+                <button type="button" onclick="ubahPeserta(1)" class="w-12 h-full bg-gray-200 text-[#2B2544] font-bold hover:bg-gray-300 transition-colors flex items-center justify-center">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                </button>
+              </div>
+              <span id="infoKapasitas" class="text-[10px] text-[#6C6287]">Kapasitas dasar paket: 2 orang. (Kelebihan dikenakan biaya Rp 15.000/orang)</span>
             </div>
           </div>
 
         </div>
 
         <!-- RIGHT COLUMN: RINGKASAN PESANAN (4 COLS) -->
-        <div class="lg:col-span-4 p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4">
+        <div class="lg:col-span-4 p-6 bg-white shadow-[0px_10px_24px_-8px_rgba(15,23,42,0.08)] rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-4 lg:sticky lg:top-6">
           <div class="flex flex-col gap-0.5">
-            <h3 class="text-[#2B2544] text-base font-bold">Ringkasan pesanan</h3>
+            <h3 class="text-[#2B2544] text-base font-bold">Ringkasan Pesanan</h3>
             <p class="text-xs text-[#6C6287]">Walk-in • Vibes Studio Foto Jatibarang</p>
           </div>
 
           <hr class="border-gray-100" />
 
-          <div class="flex flex-col gap-3 text-xs">
-            <div class="flex justify-between items-center">
-              <span class="text-[#6C6287]">Paket Terpilih</span>
-              <span class="font-bold text-[#2B2544]">Couple & Friends</span>
+          <div class="flex flex-col gap-2.5 text-xs text-[#6C6287]">
+            <div class="flex justify-between items-center font-semibold text-[#2B2544]">
+              <span id="summaryPaket">Belum memilih paket</span>
+              <span id="summaryHarga">Rp 0</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-[#6C6287]">Pelanggan</span>
-              <span class="font-semibold text-[#2B2544]">Nadia Putri • 2 orang</span>
+              <span>Tema / Background:</span>
+              <span id="summaryBackground" class="font-semibold text-[#2B2544]">-</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-[#6C6287]">Tanggal & Sesi</span>
-              <span class="font-semibold text-[#2B2544]"><?= formatTanggalIndo(date('Y-m-d')); ?></span>
+              <span>Jumlah Peserta:</span>
+              <span id="summaryPeserta" class="font-semibold text-[#2B2544]">2 Orang</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span>Jadwal Sesi:</span>
+              <span id="summaryJadwal" class="font-bold text-[#0891B2]">Pilih jam</span>
             </div>
           </div>
 
           <hr class="border-gray-100" />
 
           <div class="flex flex-col gap-2 text-xs">
-            <div class="flex justify-between items-center">
-              <span class="text-[#6C6287]">Couple & Friends</span>
-              <span class="font-semibold text-[#2B2544]">Rp 650.000</span>
+            <div class="flex justify-between">
+              <span>Harga Dasar Paket</span>
+              <span id="subTotalPaket" class="font-semibold text-[#2B2544]">Rp 0</span>
             </div>
-            <div class="flex justify-between items-center">
-              <span class="text-[#6C6287]">Cetak premium 20 x 30 cm</span>
-              <span class="font-semibold text-[#2B2544]">Rp 100.000</span>
+            <div class="flex justify-between" id="rowBiaya Tambahan" style="display: none;">
+              <span id="labelBiayaTambahan">Extra Person</span>
+              <span id="valBiayaTambahan" class="font-semibold text-[#2B2544]">Rp 0</span>
             </div>
-            <div class="flex justify-between items-center">
-              <span class="text-[#6C6287]">Biaya layanan</span>
-              <span class="font-semibold text-[#2B2544]">Rp 0</span>
+            <div class="flex justify-between text-sm font-extrabold text-[#2B2544] pt-2 border-t border-gray-100">
+              <span>Total Biaya</span>
+              <span id="totalBiaya" class="text-base text-[#0891B2]">Rp 0</span>
             </div>
-          </div>
-
-          <hr class="border-gray-100" />
-
-          <div class="flex justify-between items-center pt-1">
-            <span class="text-xs font-bold text-[#2B2544]">Total biaya</span>
-            <span class="text-xl font-bold text-[#0891B2]">Rp 750.000</span>
           </div>
 
           <button type="submit" class="w-full py-3 bg-[#0891B2] hover:bg-[#06748f] transition-colors text-white font-bold text-xs rounded-xl shadow-md text-center mt-2 flex justify-center items-center gap-2">
@@ -353,7 +359,7 @@ $total_order_badge = $r_total_order['total'] ?? 0;
           </button>
 
           <p class="text-[11px] text-[#6C6287] leading-relaxed text-center mt-1">
-            <i class="fa-solid fa-circle-info text-[#0891B2] mr-1"></i> Pembayaran dicatat di studio pada langkah berikutnya.
+            <i class="fa-solid fa-circle-info text-[#0891B2] mr-1"></i> Pembayaran walk-in dicatat di studio pada langkah berikutnya.
           </p>
         </div>
 
@@ -362,5 +368,190 @@ $total_order_badge = $r_total_order['total'] ?? 0;
     </div>
   </main>
 
+  <script>
+    const masterSlotJam = [
+      "09.00 - 09.15",
+      "10.30 - 10.45",
+      "12.00 - 12.15",
+      "13.00 - 13.15",
+      "14.30 - 14.45",
+      "16.00 - 16.15",
+      "17.30 - 17.45",
+      "19.00 - 19.15",
+      "20.00 - 20.15"
+    ];
+
+    const temaList = {
+      couple: [
+        { nama: "Polkadot Theme", desc: "Nuansa ceria dengan pola titik-titik estetis." },
+        { nama: "Flowers Theme", desc: "Dekorasi bunga romantis dan hangat." },
+        { nama: "Minimalist Solid", desc: "Warna polos bersih (Putih/Abu/Coklat/Pink)." }
+      ],
+      bestie: [
+        { nama: "Neon Vibes", desc: "Pencahayaan warna-warni energik & kekinian." },
+        { nama: "Y2K Aesthetic", desc: "Gaya retro milenial yang seru dan berdamage." },
+        { nama: "Homey Blue", desc: "Background eksklusif bernuansa biru lembut." }
+      ],
+      gang: [
+        { nama: "Streetwear", desc: "Gaya urban modern yang cocok untuk banyak orang." },
+        { nama: "Retro Vintage", desc: "Nuansa klasik jadul yang unik." },
+        { nama: "Full Crew Basic", desc: "Background luas muat banyak orang." }
+      ]
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialDate = document.getElementById('tanggalSesiInput').value;
+      loadSlotJam(initialDate);
+
+      const firstRadio = document.querySelector('input[name="nama_paket"]');
+      if(firstRadio) {
+        firstRadio.checked = true;
+        updateSummary(firstRadio);
+      }
+    });
+
+    function loadSlotJam(tanggal) {
+      const grid = document.getElementById('gridJamSesi');
+      const statusInfo = document.getElementById('statusSlotInfo');
+      const jamInput = document.getElementById('jamSesiInput');
+      
+      grid.innerHTML = '<span class="text-xs text-gray-400 col-span-3">Mengecek slot...</span>';
+
+      fetch(`BookingWalkIn.php?ajax_check_date=${tanggal}`)
+        .then(response => response.json())
+        .catch(() => []) // fallback jika belum ada handler ajax khusus, tetap render slot
+        .then(bookedSlots => {
+          if(!Array.isArray(bookedSlots)) bookedSlots = [];
+          grid.innerHTML = "";
+          let slotTersediaCount = 0;
+
+          masterSlotJam.forEach(jam => {
+            const isBooked = bookedSlots.includes(jam);
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.innerText = jam;
+            btn.className = 'py-2.5 px-2 rounded-xl border border-gray-200 text-xs font-semibold transition-all text-center';
+
+            if (isBooked) {
+              btn.classList.add('bg-rose-50', 'text-rose-600', 'border-rose-200', 'line-through', 'opacity-60', 'cursor-not-allowed');
+              btn.disabled = true;
+            } else {
+              slotTersediaCount++;
+              btn.classList.add('bg-gray-50', 'text-[#2B2544]', 'hover:border-[#0891B2]', 'hover:bg-[#ECFEFF]');
+              btn.onclick = () => selectJam(btn, jam);
+            }
+            grid.appendChild(btn);
+          });
+          statusInfo.innerText = `${slotTersediaCount} sesi tersedia`;
+        });
+    }
+
+    function selectJam(buttonElem, jamValue) {
+      const allButtons = document.querySelectorAll('#gridJamSesi button:not(:disabled)');
+      allButtons.forEach(btn => {
+        btn.classList.remove('bg-[#0891B2]', 'text-white', 'border-[#0891B2]');
+        btn.classList.add('bg-gray-50', 'text-[#2B2544]');
+      });
+
+      buttonElem.classList.remove('bg-gray-50', 'text-[#2B2544]');
+      buttonElem.classList.add('bg-[#0891B2]', 'text-white', 'border-[#0891B2]');
+
+      document.getElementById('jamSesiInput').value = jamValue;
+      document.getElementById('summaryJadwal').innerText = jamValue;
+    }
+
+    let baseKapasitasPaket = 2; 
+
+    function updateSummary(radio) {
+      var namaPaket = radio.value;
+      var harga = parseInt(radio.getAttribute('data-harga')) || 0;
+      baseKapasitasPaket = parseInt(radio.getAttribute('data-basekap')) || 2;
+      var tipePaket = radio.getAttribute('data-tipe') || 'couple';
+      
+      document.getElementById('summaryPaket').innerText = namaPaket;
+      document.getElementById('summaryHarga').innerText = "Rp " + harga.toLocaleString('id-ID');
+      document.getElementById('subTotalPaket').innerText = "Rp " + harga.toLocaleString('id-ID');
+      document.getElementById('hargaInput').value = harga;
+
+      document.getElementById('infoKapasitas').innerText = `Kapasitas dasar paket: ${baseKapasitasPaket} orang. (Kelebihan dikenakan biaya tambahan Rp 15.000/orang)`;
+
+      renderPilihanTema(tipePaket);
+
+      const inputPeserta = document.getElementById('jumlahPesertaInput');
+      if(parseInt(inputPeserta.value) < baseKapasitasPaket) {
+        inputPeserta.value = baseKapasitasPaket;
+      }
+
+      hitungBiayaTambahan();
+    }
+
+    function renderPilihanTema(tipe) {
+      const container = document.getElementById('containerPilihanTema');
+      container.innerHTML = "";
+      const listTema = temaList[tipe] || temaList.couple;
+
+      listTema.forEach((t, idx) => {
+        const isChecked = idx === 0 ? 'checked' : '';
+        if(idx === 0) {
+          document.getElementById('backgroundInput').value = t.nama;
+          document.getElementById('summaryBackground').innerText = t.nama;
+        }
+
+        const div = document.createElement('label');
+        div.className = "cursor-pointer border border-gray-200 bg-gray-50 rounded-xl p-3 flex flex-col justify-between gap-1 hover:border-[#0891B2] has-[:checked]:border-[#0891B2] has-[:checked]:bg-[#ECFEFF] transition-all";
+        div.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-[#2B2544]">${t.nama}</span>
+            <input type="radio" name="pilihan_tema_radio" value="${t.nama}" class="accent-[#0891B2]" ${isChecked} onchange="pilihTema(this)">
+          </div>
+          <span class="text-[10px] text-[#6C6287]">${t.desc}</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function pilihTema(radio) {
+      document.getElementById('backgroundInput').value = radio.value;
+      document.getElementById('summaryBackground').innerText = radio.value;
+    }
+
+    function ubahPeserta(nilai) {
+      const inputPeserta = document.getElementById('jumlahPesertaInput');
+      let currentVal = parseInt(inputPeserta.value) || 1;
+      let newVal = currentVal + nilai;
+      if (newVal < 1) newVal = 1;
+      if (newVal > 20) newVal = 20;
+      inputPeserta.value = newVal;
+      hitungBiayaTambahan();
+    }
+
+    function hitungBiayaTambahan() {
+      const inputPeserta = document.getElementById('jumlahPesertaInput');
+      const jumlahOrang = parseInt(inputPeserta.value) || 1;
+      const hargaDasar = parseInt(document.getElementById('hargaInput').value) || 0;
+
+      document.getElementById('summaryPeserta').innerText = jumlahOrang + " Orang";
+
+      let biayaTambahan = 0;
+      if (jumlahOrang > baseKapasitasPaket) {
+        let extraOrang = jumlahOrang - baseKapasitasPaket;
+        biayaTambahan = extraOrang * 15000;
+      }
+
+      document.getElementById('biayaTambahanInput').value = biayaTambahan;
+
+      const rowExtra = document.getElementById('rowBiaya Tambahan');
+      if (biayaTambahan > 0) {
+        rowExtra.style.display = "flex";
+        document.getElementById('labelBiayaTambahan').innerText = `Extra Person (${jumlahOrang - baseKapasitasPaket} orang)`;
+        document.getElementById('valBiayaTambahan').innerText = "Rp " + biayaTambahan.toLocaleString('id-ID');
+      } else {
+        rowExtra.style.display = "none";
+      }
+
+      const totalAkhir = hargaDasar + biayaTambahan;
+      document.getElementById('totalBiaya').innerText = "Rp " + totalAkhir.toLocaleString('id-ID');
+    }
+  </script>
 </body>
 </html>

@@ -6,7 +6,6 @@ include '../koneksi.php';
 // Helper Format Tanggal Bahasa Indonesia
 function formatTanggalIndo($tanggal) {
     if (!$tanggal) return '-';
-    // Gunakan nama bulan lengkap agar seragam dengan laporan bulanan
     $bulan = [
         1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
@@ -19,12 +18,13 @@ function formatTanggalIndo($tanggal) {
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, trim($_GET['search'])) : '';
 $status_filter = isset($_GET['status']) ? $_GET['status'] : 'semua';
 
-// Query Utama: Mengambil Data Pesanan Booking + Cek Keberadaan Foto di album_foto
+// Query Utama: Mengambil Data Pesanan HANYA YANG SUDAH LUNAS + Cek Keberadaan Foto di album_foto
+// Sesuai permintaan dosen: Pesanan yang belum lunas disembunyikan agar tidak makan memori/tidak tampil di galeri.
 $query = "
     SELECT b.*, 
            (SELECT COUNT(*) FROM album_foto a WHERE a.id_pelanggan = b.id_pelanggan) AS jumlah_foto_album
     FROM booking b
-    WHERE 1=1
+    WHERE (b.status_pembayaran = 'Lunas')
 ";
 
 // Filter Pencarian (Nama Lengkap / Kode Booking)
@@ -42,8 +42,8 @@ if ($status_filter === 'siap') {
 $query .= " ORDER BY b.id DESC";
 $result = mysqli_query($conn, $query);
 
-// Hitung total order untuk angka badge sidebar
-$q_total_order = mysqli_query($conn, "SELECT COUNT(*) AS total FROM booking");
+// Hitung total order yang sudah lunas untuk badge sidebar jika diperlukan
+$q_total_order = mysqli_query($conn, "SELECT COUNT(*) AS total FROM booking WHERE status_pembayaran = 'Lunas'");
 $r_total_order = mysqli_fetch_assoc($q_total_order);
 $total_order = $r_total_order['total'] ?? 0;
 ?>
@@ -86,7 +86,7 @@ $total_order = $r_total_order['total'] ?? 0;
     <div class="w-full flex flex-col justify-start items-start gap-8">
       <!-- Logo Brand -->
       <div class="flex justify-start items-center gap-3">
-        <img src="../user/asset/logo.jpeg" alt="Logo SIMAVIS" class="w10 h-10 rounded-lg object-cover shadow-xs" />
+        <img src="../user/asset/logo.jpeg" alt="Logo SIMAVIS" class="w-10 h-10 rounded-lg object-cover shadow-xs" />
         <div class="flex flex-col justify-start items-start gap-0.5">
           <div class="text-white text-base font-bold">SIMAVIS</div>
           <div class="text-[#22D3EE]/80 text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
@@ -152,7 +152,7 @@ $total_order = $r_total_order['total'] ?? 0;
       <div class="flex justify-between items-center w-full">
         <div class="flex flex-col gap-1">
           <h1 class="text-[#2B2544] text-2xl lg:text-[30px] font-bold">Galeri Pesanan</h1>
-          <p class="text-[#6C6287] text-sm font-normal">Daftar folder pesanan berdasarkan nama pelanggan dan ID booking</p>
+          <p class="text-[#6C6287] text-sm font-normal">Daftar folder pesanan lunas berdasarkan nama pelanggan dan ID booking</p>
         </div>
         <div class="flex items-center gap-3">
           <div class="px-4 py-2 bg-white shadow-sm rounded-xl outline outline-1 outline-[#EAE6FA] -outline-offset-1 flex items-center gap-2">
@@ -247,7 +247,7 @@ $total_order = $r_total_order['total'] ?? 0;
         <?php endwhile; 
         else : ?>
         <div class="p-8 text-center text-xs text-[#6C6287]">
-          Tidak ada folder pesanan yang ditemukan.
+          Tidak ada folder pesanan lunas yang ditemukan.
         </div>
         <?php endif; ?>
 

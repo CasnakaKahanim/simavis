@@ -15,7 +15,6 @@ if (!isset($_SESSION['id_staf']) && !isset($_SESSION['id_admin'])) {
 
 function formatTanggalIndo($tanggal) {
     if (!$tanggal) return '-';
-    // Gunakan nama bulan lengkap agar seragam dengan laporan bulanan
     $bulan = [
         1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
@@ -46,13 +45,13 @@ if (!$data) {
 }
 
 // Penanganan variabel tampilan
-$nama_pelanggan   = $data['nama_lengkap'] ?? 'Pelanggan';
+$nama_pelanggan   = $data['nama_pelanggan'] ?? $data['nama_lengkap'] ?? 'Pelanggan';
 $no_whatsapp      = $data['no_whatsapp'] ?? '-';
-$jumlah_peserta   = $data['jumlah_peserta'] ?? '1 orang';
+$jumlah_peserta   = $data['jumlah_peserta'] ?? '2 orang';
 $kode_booking     = $data['kode_booking'] ?? 'SIM-' . $data['id'];
 $nama_paket       = $data['nama_paket'] ?? 'Paket Foto';
 $total_harga      = intval($data['total_harga'] ?? 0);
-$tanggal_sesi     = !empty($data['tanggal_sesi']) ? date('d Oktober Y', strtotime($data['tanggal_sesi'])) : date('d M Y');
+$tanggal_sesi     = !empty($data['tanggal_sesi']) ? formatTanggalIndo($data['tanggal_sesi']) : formatTanggalIndo(date('Y-m-d'));
 $jam_sesi         = $data['jam_sesi'] ?? '10.00 WIB';
 $status_bayar     = $data['status_pembayaran'] ?? 'Lunas';
 $status_sesi      = $data['status_sesi'] ?? 'Terjadwal';
@@ -199,7 +198,6 @@ $role_staf_login  = $_SESSION['role'] ?? 'Admin Utama';
       <!-- MAIN WRAPPER CARD -->
       <div class="p-6 lg:p-8 bg-white shadow-sm rounded-[24px] outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex flex-col gap-6">
       
-
         <!-- SUCCESS ALERT BANNER -->
         <div class="p-5 bg-[#ECFDF5] border border-[#BBE7D5] rounded-2xl flex items-center gap-4">
           <div class="w-11 h-11 bg-white rounded-full flex justify-center items-center shrink-0 shadow-sm">
@@ -270,7 +268,7 @@ $role_staf_login  = $_SESSION['role'] ?? 'Admin Utama';
 
             <!-- Action Buttons Left Column -->
             <div class="flex flex-col gap-2">
-              <a href="booking.php" class="w-full h-11 bg-white border border-[#E5E7EB] hover:bg-gray-50 transition-colors text-[#0F597A] font-bold rounded-xl flex justify-center items-center gap-2 text-xs shadow-sm">
+              <a href="BookingWalkIn.php" class="w-full h-11 bg-white border border-[#E5E7EB] hover:bg-gray-50 transition-colors text-[#0F597A] font-bold rounded-xl flex justify-center items-center gap-2 text-xs shadow-sm">
                 <span>+ Booking Walk-In Baru</span>
               </a>
               <a href="dashboard.php" class="w-full h-9 flex justify-center items-center text-[#0891B2] font-semibold text-xs hover:underline gap-1.5">

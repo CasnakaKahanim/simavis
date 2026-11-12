@@ -82,6 +82,7 @@ $link_unduh_user = "user/akun.php?kode=" . $data_booking['kode_booking'];
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIMAVIS - Detail Folder Pesanan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Font: Instrument Sans -->
@@ -104,7 +105,7 @@ $link_unduh_user = "user/akun.php?kode=" . $data_booking['kode_booking'];
     <div class="w-full flex flex-col justify-start items-start gap-8">
       <!-- Logo Brand -->
       <div class="flex justify-start items-center gap-3">
-        <img class="w-10 h-10 rounded-lg" src="https://placehold.co/40x40" alt="Logo" />
+        <img src="../user/asset/logo.jpeg" alt="Logo SIMAVIS" class="w-10 h-10 rounded-lg object-cover shadow-xs" />
         <div class="flex flex-col justify-start items-start gap-0.5">
           <div class="text-white text-base font-bold">SIMAVIS</div>
           <div class="text-[#22D3EE]/80 text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
@@ -113,39 +114,39 @@ $link_unduh_user = "user/akun.php?kode=" . $data_booking['kode_booking'];
 
       <!-- Navigation Menu -->
       <nav class="w-full flex flex-col gap-2">
-        <a href="dashboard.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
-          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
-            <div class="w-[13.5px] h-[14.25px] absolute left-[2.25px] top-[1.5px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
-          </div>
-          <span class="flex-1">Dashboard SIMAVIS</span>
-        </a>
+            <!-- Dashboard -->
+            <a href="dashboard.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+                <i class="fa-solid fa-house w-5 text-center"></i>
+                <span class="flex-1">Dashboard</span>
+            </a>
 
-        <a href="pesanan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
-          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
-            <div class="w-[12px] h-[15px] absolute left-[3px] top-[1.5px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
-          </div>
-          <span class="flex-1">Pesanan</span>
-          <span class="px-1.5 py-0.5 bg-[#F0EDFF] rounded-md text-[#8A72F1] text-[11px] font-bold"><?= $total_order; ?></span>
-        </a>
+            <!-- Pesanan -->
+            <a href="pesanan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+                <i class="fa-solid fa-cart-shopping w-5 text-center"></i>
+                <span class="flex-1">Pesanan</span>
+            </a>
 
-        <!-- Galeri Active Menu -->
-        <a href="galeri.php" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md">
-          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
-            <div class="w-[13.5px] h-[13.5px] absolute left-[2.25px] top-[2.25px] outline outline-2 outline-white -outline-offset-1"></div>
-          </div>
-          <span class="flex-1">Galeri & QR</span>
-        </a>
+            <!-- Galeri & QR -->
+            <a href="galeri.php" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md">
+                <i class="fa-solid fa-images w-5 text-center"></i>
+                <span class="flex-1">Galeri & QR</span>
+            </a>
 
-        <a href="Laporan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
-          <div class="w-[18px] h-[18px] relative overflow-hidden flex-shrink-0">
-            <div class="w-[10.5px] h-[13.5px] absolute left-[3.75px] top-[2.25px] outline outline-2 outline-[#6C6287] -outline-offset-1"></div>
-          </div>
-          <span class="flex-1">Laporan</span>
-        </a>
-      </nav>
+            <!-- Paket & Tema Foto -->
+            <a href="paket.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+            <i class="fa-solid fa-boxes-packing w-5 text-center"></i>
+            <span class="flex-1">Paket & Tema</span>
+            </a>
+            
+            <!-- Laporan -->
+            <a href="laporan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+                <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                <span class="flex-1">Laporan</span>
+            </a>
+        </nav>
     </div>
 
-    <!-- User Profile Card -->
+    <!-- Bottom Profile Card & Logout -->
     <div class="w-full p-3 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-start items-center gap-3 shadow-sm">
       <img class="w-9 h-9 rounded-xl flex-shrink-0" src="https://placehold.co/36x36" alt="User Profile" />
       <div class="flex-1 flex flex-col justify-start items-start gap-0.5 min-w-0">

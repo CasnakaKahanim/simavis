@@ -14,7 +14,7 @@ if (!isset($_SESSION['id_pelanggan']) || !isset($_SESSION['booking_data'])) {
 
 $b_data       = $_SESSION['booking_data'];
 $total_harga  = $b_data['total_harga'];
-$minimal_dp   = ceil($total_harga * 0.5); // Minimal DP 50%
+$minimal_dp   = ceil($total_harga * 0.5); // Perhitungan DP 50%
 
 // Ambil data pelanggan untuk navbar atas
 $id_pelanggan = $_SESSION['id_pelanggan'];
@@ -64,24 +64,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar_nanti'])) {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>SIMAVIS - Pembayaran Booking</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="<?= MIDTRANS_SNAP_URL; ?>" data-client-key="<?= MIDTRANS_CLIENT_KEY; ?>"></script>
+  <script src="<?= defined('MIDTRANS_SNAP_URL') ? MIDTRANS_SNAP_URL : 'https://app.sandbox.midtrans.com/snap/snap.js'; ?>" data-client-key="<?= defined('MIDTRANS_CLIENT_KEY') ? MIDTRANS_CLIENT_KEY : ''; ?>"></script>
   <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
 <body class="bg-[#F6F8FC] text-[#0C4A6E] min-h-screen flex flex-col">
 
-  <!-- ================= NAVBAR ATAS (Sama seperti halaman Booking) ================= -->
-  <header class="w-full px-6 lg:px-12 py-4 flex justify-between items-center text-xs text-[#64748B] border-b border-[#E2E8F0] bg-white">
-        <div class="flex items-center gap-2">
-        <img src="asset/logo.jpeg" alt="Logo" class="w-6 h-6 rounded-md object-cover">
-        <span>Vibes Studio Jatibarang</span>
-        </div>
-        <a href="booking.php" class="text-[#0891B2] font-semibold hover:underline">← Kembali ke Detail Booking</a>
-    </header>
+  <!-- ================= NAVBAR ATAS ================= -->
+  <header class="w-full px-4 sm:px-6 lg:px-12 py-4 flex justify-between items-center text-xs text-[#64748B] border-b border-[#E2E8F0] bg-white">
+    <div class="flex items-center gap-2">
+      <img src="asset/logo.jpeg" alt="Logo" class="w-6 h-6 rounded-md object-cover">
+      <span class="font-semibold text-[#0C4A6E]">Vibes Studio Jatibarang</span>
+    </div>
+    <a href="booking.php" class="text-[#0891B2] font-semibold hover:underline">← Kembali</a>
+  </header>
 
   <!-- ================= MAIN CONTAINER ================= -->
   <main class="w-full max-w-[700px] mx-auto px-4 py-8 flex flex-col gap-6 grow justify-center">
@@ -99,22 +99,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar_nanti'])) {
       </div>
     <?php endif; ?>
 
-    <!-- Summary Box -->
-    <div class="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col gap-4">
-      <div class="flex justify-between items-start border-b border-[#E2E8F0] pb-4">
-        <div>
-          <div class="text-[#0C4A6E] text-base font-bold"><?= htmlspecialchars($b_data['nama_paket']); ?></div>
-          <div class="text-xs text-[#64748B] mt-1">Pemesan: <span class="font-semibold text-[#0C4A6E]"><?= htmlspecialchars($b_data['nama_lengkap']); ?></span></div>
-          <div class="text-xs text-[#64748B] mt-0.5">Jadwal Sesi: <span class="font-semibold text-[#0891B2]"><?= formatTanggalIndo($b_data['tanggal_sesi']); ?> • Jam <?= htmlspecialchars($b_data['jam_sesi']); ?></span></div>
+    <!-- Summary Box (Disamakan dengan Gaya Kartu Booking) -->
+    <div class="p-5 sm:p-6 bg-white rounded-2xl border border-[#E2E8F0] shadow-md flex flex-col gap-5">
+      
+      <div class="flex justify-between items-center border-b border-[#E2E8F0] pb-4">
+        <h3 class="font-bold text-sm text-[#0C4A6E]">Sesi pilihan Anda</h3>
+        <span class="text-xs text-[#0891B2] font-semibold">SIMAVIS</span>
+      </div>
+
+      <div class="flex flex-col gap-3 text-xs text-[#64748B]">
+        <div class="flex justify-between items-center font-semibold text-[#0C4A6E]">
+          <span><?= htmlspecialchars($b_data['nama_paket']); ?></span>
+          <span id="summaryHargaDisplay">Rp <?= number_format($total_harga, 0, ',', '.'); ?></span>
         </div>
-        <div class="text-right">
-          <div class="text-xs text-[#64748B]">Total Harga</div>
-          <div class="text-[#0891B2] text-lg font-bold">Rp <?= number_format($total_harga, 0, ',', '.'); ?></div>
+        
+        <div class="flex justify-between items-center">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-calendar-days text-[#0891B2]"></i> Sesi Terpilih:</span>
+          <span class="font-bold text-[#0891B2]"><?= formatTanggalIndo($b_data['tanggal_sesi']); ?> · Jam <?= htmlspecialchars($b_data['jam_sesi']); ?></span>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <span><i class="fa-solid fa-location-dot text-[#0891B2]"></i> Vibes Studio, Jatibarang</span>
+        </div>
+      </div>
+
+      <hr class="border-[#E2E8F0]">
+
+      <div class="flex flex-col gap-2 text-xs">
+        <div class="flex justify-between">
+          <span>Harga Paket</span>
+          <span class="font-semibold text-[#0C4A6E]">Rp <?= number_format($total_harga, 0, ',', '.'); ?></span>
+        </div>
+        <div class="flex justify-between text-sm font-bold text-[#0C4A6E] pt-2 border-t border-[#E2E8F0]">
+          <span>Total biaya</span>
+          <span id="totalBiayaDisplay">Rp <?= number_format($total_harga, 0, ',', '.'); ?></span>
         </div>
       </div>
 
       <!-- Pilihan Tipe Pembayaran Online (Lunas vs DP) -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 pt-2 border-t border-[#E2E8F0]">
         <label class="text-xs font-bold text-[#0C4A6E]">Pilih Nominal Pembayaran Online:</label>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <label class="border-2 border-[#0891B2] bg-[#E6F7F8]/30 p-3 rounded-xl flex items-center justify-between cursor-pointer">
@@ -140,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar_nanti'])) {
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
       <!-- OPSI 1: MIDTRANS ONLINE -->
-      <div class="bg-white p-6 rounded-2xl border-2 border-[#0891B2] shadow-sm flex flex-col justify-between gap-4">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border-2 border-[#0891B2] shadow-sm flex flex-col justify-between gap-4">
         <div>
           <div class="flex items-center gap-2 mb-2">
             <span class="w-2.5 h-2.5 bg-[#0891B2] rounded-full"></span>
@@ -149,14 +172,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar_nanti'])) {
           <p class="text-[11px] text-[#64748B]">Bayar otomatis secara online lewat QRIS, GoPay, ShopeePay, atau Transfer Bank.</p>
         </div>
 
-        <button type="button" onclick="bayarOnlineMidtrans()" class="w-full py-3 bg-[#0891B2] hover:bg-[#06748f] text-white font-bold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+        <button type="button" onclick="bayarOnlineMidtrans()" class="w-full h-12 bg-[#0891B2] hover:bg-[#06748f] text-white font-bold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
           <i class="fa-solid fa-qrcode"></i>
-          <span id="btnTextMidtrans">Bayar Lunas Sekarang</span>
+          <span id="btnTextMidtrans">Bayar Lunas Rp <?= number_format($total_harga, 0, ',', '.'); ?></span>
         </button>
       </div>
 
       <!-- OPSI 2: BAYAR NANTI DI STUDIO -->
-      <form action="" method="POST" class="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col justify-between gap-4">
+      <form action="" method="POST" class="bg-white p-5 sm:p-6 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col justify-between gap-4">
         <input type="hidden" name="bayar_nanti" value="1">
         <div>
           <div class="flex items-center gap-2 mb-2">
@@ -166,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar_nanti'])) {
           <p class="text-[11px] text-[#64748B]">Amankan jadwal slot foto sekarang, lalu lakukan pembayaran langsung saat tiba di studio.</p>
         </div>
 
-        <button type="submit" class="w-full py-3 bg-[#F1F5F9] hover:bg-[#E2E8F0] text-[#0C4A6E] font-bold rounded-xl text-xs transition-all border border-[#E2E8F0] flex items-center justify-center gap-2">
+        <button type="submit" class="w-full h-12 bg-[#F1F5F9] hover:bg-[#E2E8F0] text-[#0C4A6E] font-bold rounded-xl text-xs transition-all border border-[#E2E8F0] flex items-center justify-center gap-2">
           <i class="fa-solid fa-store"></i>
           <span>Konfirmasi & Bayar di Studio</span>
         </button>
@@ -199,31 +222,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bayar_nanti'])) {
       const inputHarga = document.getElementById('inputTotalHarga');
       const inputPaket = document.getElementById('inputNamaPaket');
       const btnText = document.getElementById('btnTextMidtrans');
+      const summaryHargaDisplay = document.getElementById('summaryHargaDisplay');
+      const totalBiayaDisplay = document.getElementById('totalBiayaDisplay');
 
       if (isDp) {
         inputHarga.value = dpPrice;
         inputPaket.value = rawPaket + " (DP 50%)";
         btnText.innerText = "Bayar DP Rp " + dpPrice.toLocaleString('id-ID');
+        summaryHargaDisplay.innerText = "Rp " + dpPrice.toLocaleString('id-ID');
+        totalBiayaDisplay.innerText = "Rp " + dpPrice.toLocaleString('id-ID');
       } else {
         inputHarga.value = fullPrice;
         inputPaket.value = rawPaket;
         btnText.innerText = "Bayar Lunas Rp " + fullPrice.toLocaleString('id-ID');
+        summaryHargaDisplay.innerText = "Rp " + fullPrice.toLocaleString('id-ID');
+        totalBiayaDisplay.innerText = "Rp " + fullPrice.toLocaleString('id-ID');
       }
     }
 
-    function bayarOnlineMidtrans() {
-      const formElement = document.getElementById('midtransForm');
-      const formData = new FormData(formElement);
-
-      fetch('../staf/proses_midstrict.php', { // atau file proses midtrans Anda
-        method: 'POST',
-        body: formData
-      })
-      // Lanjutkan fetch handler ...
-      // Perhatikan path file proses_midtrans.php sesuai direktori Anda sebelumnya: '../staf/proses_midtrans.php'
-    }
-  </script>
-  <script>
     function bayarOnlineMidtrans() {
       const formElement = document.getElementById('midtransForm');
       const formData = new FormData(formElement);

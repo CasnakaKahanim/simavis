@@ -46,113 +46,182 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>SIMAVIS - Masuk Klien</title>
+  
+  <link rel="icon" type="image/jpeg" href="asset/logo.jpeg">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
-  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style> 
     body { font-family: 'Inter', sans-serif; }
-    .font-outfit { font-family: 'Outfit', sans-serif; }
+    .font-handwriting { font-family: 'Caveat', cursive; }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen w-full flex flex-col lg:flex-row">
+<body class="bg-[#FDFBF7] dark:bg-[#1A1614] text-[#3E2723] dark:text-[#F5EBE6] antialiased min-h-screen flex flex-col justify-between transition-colors duration-300">
 
-  <div class="w-full min-h-screen flex flex-col lg:flex-row">
+  <!-- ================= TOP BAR ================= -->
+  <div class="w-full bg-[#3E2723] dark:bg-[#2A1B18] text-[#EFEBE9] text-[10px] sm:text-[11px] py-2 px-4 text-center font-medium tracking-wide flex justify-center items-center gap-2">
+    <i class="fa-solid fa-camera-retro text-[#D7CCC8]"></i>
+    <span>VIBES STUDIO JATIBARANG · AKSES AKUN & RIWAYAT BOOKING</span>
+  </div>
+
+  <!-- ================= MAIN CONTAINER SPLIT ================= -->
+  <div class="w-full flex-1 flex flex-col lg:flex-row items-center justify-center">
     
-    <!-- KOLOM KIRI (BRAND / BANNER) -->
-    <div class="w-full lg:w-[40%] xl:w-[546px] p-8 lg:p-12 flex flex-col justify-between items-center text-center flex-shrink-0 py-12 lg:py-12"
-         style="background: linear-gradient(180deg, #0D4D66 0%, #083347 100%);">
-      <div class="hidden lg:block h-4"></div>
-      <div class="flex flex-col items-center gap-6 my-auto">
-        <div class="w-24 h-24 lg:w-40 lg:h-40 shadow-2xl rounded-[28px] lg:rounded-[32px] bg-[#0891B2]/20 border border-[#0891B2]/30 flex justify-center items-center backdrop-blur-sm"
-             style="box-shadow: 0px 12px 24px rgba(8, 145, 178, 0.25);">
-          <span class="text-[#0891B2] text-5xl lg:text-8xl font-outfit font-black select-none">S</span>
+    <!-- KOLOM KIRI: Hanya tampil di Desktop/Laptop -->
+    <div class="hidden lg:flex w-[45%] xl:w-[500px] p-8 lg:p-12 flex-col justify-between items-center text-center bg-[#F5EBE6]/60 dark:bg-[#231E1B] border-r border-[#D7CCC8]/60 dark:border-[#4E342E] min-h-[calc(100vh-37px)]">
+      <div class="w-full flex justify-start">
+        <a href="web_informasi.php" class="inline-flex items-center gap-2 text-xs font-semibold text-[#5D4037] dark:text-[#D7CCC8] hover:underline bg-white/80 dark:bg-[#1A1614] px-3 py-1.5 rounded-xl border border-[#D7CCC8]/60 dark:border-[#4E342E] shadow-xs transition-all">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Kembali ke Beranda</span>
+        </a>
+      </div>
+
+      <div class="flex flex-col items-center gap-5 my-auto py-8">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-white dark:bg-[#1A1614] border border-[#D7CCC8]/60 dark:border-[#4E342E] shadow-md flex justify-center items-center overflow-hidden p-2">
+          <img src="asset/logo.jpeg" alt="Logo SIMAVIS" class="w-full h-full object-cover rounded-2xl" onerror="this.src='https://placehold.co/100x100'" />
         </div>
         <div class="flex flex-col gap-1.5">
-          <h1 class="text-white text-2xl lg:text-4xl font-outfit font-extrabold tracking-tight">SIMAVIS</h1>
-          <p class="text-[#67E8F9] text-xs font-medium uppercase tracking-wider">
-            Sistem Manajemen Informasi Studio Foto
+          <h1 class="text-[#3E2723] dark:text-white text-2xl lg:text-4xl font-handwriting">Explore your imagination</h1>
+          <p class="text-[#6D4C41] dark:text-gray-300 text-xs lg:text-sm font-normal max-w-[340px] leading-relaxed">
+            Masuk untuk mulai booking jadwal sesi foto dan mengelola album digital Anda di SIMAVIS.
           </p>
         </div>
       </div>
-      <div class="text-white text-xs lg:text-sm font-semibold pt-6 lg:pt-0">
-        Vibes Studio Foto Jatibarang
+
+      <div class="text-[#8D6E63] dark:text-gray-400 text-xs font-medium">
+        © 2026 SIMAVIS · Vibes Studio Jatibarang
       </div>
     </div>
 
-    <!-- KOLOM KANAN (FORM LOGIN / AUTO-REGISTER) -->
-    <div class="flex-1 p-6 lg:p-12 flex flex-col justify-between items-center relative bg-cover bg-center min-h-[500px] lg:min-h-screen"
-         style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.85) 100%), url('https://placehold.co/820x768');">
-      <div class="hidden lg:block h-2"></div>
+    <!-- KOLOM KANAN / TAMPILAN UTAMA -->
+    <div class="flex-1 w-full p-4 sm:p-8 lg:p-12 flex flex-col justify-center items-center bg-[#FDFBF7] dark:bg-[#1A1614]">
+      
+      <!-- Tombol Kembali untuk HP -->
+      <div class="w-full max-w-[440px] mb-3 flex lg:hidden justify-start">
+        <a href="web_informasi.php" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5D4037] dark:text-[#D7CCC8] hover:underline bg-white dark:bg-[#231E1B] px-3 py-1.5 rounded-xl border border-[#D7CCC8]/60 dark:border-[#4E342E] shadow-xs">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Kembali ke Beranda</span>
+        </a>
+      </div>
 
-      <!-- Glassmorphism Form Card -->
-      <div class="w-full max-w-[460px] p-6 sm:p-10 bg-white/80 lg:bg-white/70 backdrop-blur-md shadow-xl rounded-3xl border border-white/60 flex flex-col gap-6 my-auto my-8 lg:my-auto">
+      <!-- Card Form -->
+      <div class="w-full max-w-[440px] p-5 sm:p-8 bg-white dark:bg-[#231E1B] rounded-2xl border border-[#D7CCC8]/60 dark:border-[#4E342E] shadow-sm flex flex-col gap-5">
         
-        <div class="flex flex-col gap-2">
-          <h2 class="text-[#0C4A6E] text-2xl lg:text-3xl font-outfit font-extrabold">Selamat Datang!</h2>
-          <p class="text-[#64748B] text-xs lg:text-sm font-normal leading-relaxed">
-            Masukkan data Anda. Jika belum terdaftar, akun akan dibuatkan otomatis.
+        <!-- LOGO TENGAH KHUSUS HP -->
+        <div class="flex lg:hidden flex-col items-center justify-center gap-1.5 pt-1 pb-2 border-b border-[#D7CCC8]/40 dark:border-[#4E342E]">
+          <img src="asset/logo.jpeg" alt="Logo SIMAVIS" class="w-14 h-14 rounded-2xl object-cover border border-[#D7CCC8]/60 shadow-sm" onerror="this.src='https://placehold.co/60x60'" />
+          <span class="text-[#3E2723] dark:text-white text-base font-extrabold tracking-tight mt-1">SIMAVIS</span>
+          <span class="text-[#5D4037] dark:text-[#D7CCC8] text-[10px] font-bold tracking-widest uppercase">Vibes Studio Jatibarang</span>
+        </div>
+
+        <div class="flex flex-col gap-1 text-center sm:text-left">
+          <h2 class="text-[#3E2723] dark:text-white text-xl sm:text-2xl font-bold">Selamat Datang!</h2>
+          <p class="text-[#6D4C41] dark:text-gray-300 text-xs leading-relaxed">
+            Masukkan data Anda untuk masuk. Jika belum terdaftar, akun baru akan otomatis dibuat.
           </p>
         </div>
 
         <?php if (!empty($error)) { ?>
-          <div class="p-3 bg-red-100 border border-red-400 text-red-700 text-xs rounded-xl">
-            <?= $error; ?>
+          <div class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-xs rounded-xl flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span><?= $error; ?></span>
           </div>
         <?php } ?>
 
-        <form class="flex flex-col gap-4" action="" method="POST">
+        <!-- Form Utama -->
+        <form class="flex flex-col gap-3.5" action="" method="POST">
           
           <div class="flex flex-col gap-1.5">
-            <label class="text-[#0F172A] text-xs font-semibold">Nama Lengkap</label>
-            <input type="text" 
-                   name="nama" 
-                   placeholder="Contoh: Nadia Putri" 
-                   class="w-full h-11 px-4 bg-[#F8FAFC] rounded-xl outline outline-1 outline-[#E2E8F0] -outline-offset-1 text-[#0F172A] text-sm font-normal focus:outline-[#0891B2] focus:bg-white transition-all"
-                   required />
+            <label class="text-[#3E2723] dark:text-gray-200 text-xs font-semibold">Nama Lengkap</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8D6E63]">
+                <i class="fa-solid fa-user text-xs"></i>
+              </span>
+              <input type="text" 
+                     name="nama" 
+                     placeholder="Contoh: Nadia Putri" 
+                     class="w-full h-11 pl-10 pr-4 bg-[#FDFBF7] dark:bg-[#1A1614] rounded-xl border border-[#D7CCC8]/60 dark:border-[#4E342E] text-[#3E2723] dark:text-white text-xs font-medium focus:outline-none focus:border-[#5D4037] transition-all"
+                     required />
+            </div>
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-[#0F172A] text-xs font-semibold">Alamat Email</label>
-            <input type="email" 
-                   name="email" 
-                   placeholder="email@domain.com" 
-                   class="w-full h-11 px-4 bg-[#F8FAFC] rounded-xl outline outline-1 outline-[#E2E8F0] -outline-offset-1 text-[#0F172A] text-sm font-normal focus:outline-[#0891B2] focus:bg-white transition-all"
-                   required />
+            <label class="text-[#3E2723] dark:text-gray-200 text-xs font-semibold">Alamat Email</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8D6E63]">
+                <i class="fa-solid fa-envelope text-xs"></i>
+              </span>
+              <input type="email" 
+                     name="email" 
+                     placeholder="email@domain.com" 
+                     class="w-full h-11 pl-10 pr-4 bg-[#FDFBF7] dark:bg-[#1A1614] rounded-xl border border-[#D7CCC8]/60 dark:border-[#4E342E] text-[#3E2723] dark:text-white text-xs font-medium focus:outline-none focus:border-[#5D4037] transition-all"
+                     required />
+            </div>
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-[#0F172A] text-xs font-semibold">Nomor WhatsApp</label>
-            <input type="text" 
-                   name="no_hp" 
-                   placeholder="081234567890" 
-                   class="w-full h-11 px-4 bg-[#F8FAFC] rounded-xl outline outline-1 outline-[#E2E8F0] -outline-offset-1 text-[#0F172A] text-sm font-normal focus:outline-[#0891B2] focus:bg-white transition-all"
-                   required />
+            <label class="text-[#3E2723] dark:text-gray-200 text-xs font-semibold">Nomor WhatsApp</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8D6E63]">
+                <i class="fa-brands fa-whatsapp text-xs"></i>
+              </span>
+              <input type="tel" 
+                     name="no_hp" 
+                     placeholder="081234567890" 
+                     class="w-full h-11 pl-10 pr-4 bg-[#FDFBF7] dark:bg-[#1A1614] rounded-xl border border-[#D7CCC8]/60 dark:border-[#4E342E] text-[#3E2723] dark:text-white text-xs font-medium focus:outline-none focus:border-[#5D4037] transition-all"
+                     required />
+            </div>
           </div>
 
           <button type="submit" 
-                  class="w-full py-3 bg-[#0891B2] hover:bg-[#06748f] transition-all text-white text-sm font-bold rounded-xl shadow-lg shadow-[#0891B2]/20 active:scale-[0.99] mt-2">
-            Masuk / Lanjutkan ke Riwayat
+                  class="w-full h-11 bg-[#3E2723] hover:bg-[#5D4037] transition-colors text-white font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 mt-1">
+            <span>Masuk / Lanjutkan</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </button>
 
         </form>
 
-      </div>
+        <!-- Pilihan Opsi Login Lainnya -->
+        <div class="flex items-center my-1">
+          <div class="flex-1 border-t border-[#D7CCC8]/40 dark:border-[#4E342E]"></div>
+          <span class="px-3 text-[#8D6E63] dark:text-gray-400 text-[11px] font-medium uppercase">Atau masuk dengan</span>
+          <div class="flex-1 border-t border-[#D7CCC8]/40 dark:border-[#4E342E]"></div>
+        </div>
 
-      <div class="flex items-center gap-2 text-[#64748B] text-xs font-normal pb-4 lg:pb-0">
-        <span>v2.0.1</span>
-        <span class="w-1 h-1 bg-[#64748B]/50 rounded-full"></span>
-        <span>Vibes Studio Foto Jatibarang</span>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Tombol Logo Google (Statik / Belum aktif) -->
+          <div class="h-10 px-3 border border-[#D7CCC8]/60 dark:border-[#4E342E] bg-[#FDFBF7] dark:bg-[#1A1614] rounded-xl flex items-center justify-center gap-2 text-xs font-semibold text-[#3E2723] dark:text-white select-none cursor-default">
+            <i class="fa-brands fa-google text-red-500 text-sm"></i>
+            <span>Google</span>
+          </div>
+          
+          <!-- Tombol Logo WhatsApp (Statik / Belum aktif) -->
+          <div class="h-10 px-3 border border-[#D7CCC8]/60 dark:border-[#4E342E] bg-[#FDFBF7] dark:bg-[#1A1614] rounded-xl flex items-center justify-center gap-2 text-xs font-semibold text-[#3E2723] dark:text-white select-none cursor-default">
+            <i class="fa-brands fa-whatsapp text-emerald-500 text-base"></i>
+            <span>WhatsApp</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
 
   </div>
 
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
 </body>
 </html>

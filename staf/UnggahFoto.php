@@ -98,6 +98,7 @@ function formatTanggalIndo($tanggal) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIMAVIS - Unggah Foto Pesanan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,36 +115,63 @@ function formatTanggalIndo($tanggal) {
   <!-- SIDEBAR -->
   <aside class="w-[260px] h-full flex-shrink-0 p-5 pt-8 pb-8 flex flex-col justify-between items-start border-r border-[#164E63]"
          style="background: linear-gradient(180deg, #0F597A 0%, #0A4061 60%, #082E4D 100%);">
+    
     <div class="w-full flex flex-col justify-start items-start gap-8">
+      <!-- Logo Brand -->
       <div class="flex justify-start items-center gap-3">
-        <img class="w-10 h-10 rounded-lg" src="https://placehold.co/40x40" alt="Logo" />
+        <img src="../user/asset/logo.jpeg" alt="Logo SIMAVIS" class="w-10 h-10 rounded-lg object-cover shadow-xs" />
         <div class="flex flex-col justify-start items-start gap-0.5">
           <div class="text-white text-base font-bold">SIMAVIS</div>
           <div class="text-[#22D3EE]/80 text-[11px] font-medium uppercase tracking-wider">Vibes Studio Foto</div>
         </div>
       </div>
+
+      <!-- Navigation Menu -->
       <nav class="w-full flex flex-col gap-2">
-        <a href="dashboard.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
-          <span class="flex-1">Dashboard SIMAVIS</span>
-        </a>
-        <a href="pesanan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
-          <span class="flex-1">Pesanan</span>
-          <span class="px-1.5 py-0.5 bg-[#F0EDFF] rounded-md text-[#8A72F1] text-[11px] font-bold">12</span>
-        </a>
-        <a href="galeri.php" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md">
-          <span class="flex-1">Galeri & QR</span>
-        </a>
-        <a href="Laporan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
-          <span class="flex-1">Laporan</span>
-        </a>
-      </nav>
+            <!-- Dashboard -->
+            <a href="dashboard.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+                <i class="fa-solid fa-house w-5 text-center"></i>
+                <span class="flex-1">Dashboard</span>
+            </a>
+
+            <!-- Pesanan -->
+            <a href="pesanan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+                <i class="fa-solid fa-cart-shopping w-5 text-center"></i>
+                <span class="flex-1">Pesanan</span>
+            </a>
+
+            <!-- Galeri & QR -->
+            <a href="galeri.php" class="w-full px-4 py-3 bg-[#0891B2] rounded-xl flex justify-start items-center gap-3 text-white font-semibold text-sm shadow-md">
+                <i class="fa-solid fa-images w-5 text-center"></i>
+                <span class="flex-1">Galeri & QR</span>
+            </a>
+
+            <!-- Paket & Tema Foto -->
+            <a href="paket.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+            <i class="fa-solid fa-boxes-packing w-5 text-center"></i>
+            <span class="flex-1">Paket & Tema</span>
+            </a>
+            
+            <!-- Laporan -->
+            <a href="laporan.php" class="w-full px-4 py-3 rounded-xl flex justify-start items-center gap-3 text-white/85 hover:bg-white/10 transition-colors font-medium text-sm">
+                <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                <span class="flex-1">Laporan</span>
+            </a>
+        </nav>
     </div>
+
+    <!-- Bottom Profile Card & Logout -->
     <div class="w-full p-3 bg-white rounded-2xl outline outline-1 outline-[#E5E7EB] -outline-offset-1 flex justify-start items-center gap-3 shadow-sm">
       <img class="w-9 h-9 rounded-xl flex-shrink-0" src="https://placehold.co/36x36" alt="User Profile" />
       <div class="flex-1 flex flex-col justify-start items-start gap-0.5 min-w-0">
-        <div class="text-[#2B2544] text-xs font-semibold truncate w-full">Dimas Prayoga</div>
+        <div class="text-[#2B2544] text-xs font-semibold truncate w-full"><?= htmlspecialchars($_SESSION['nama_staf'] ?? 'Dimas Prayoga'); ?></div>
         <div class="text-[#6C6287] text-[11px] font-normal truncate w-full">Admin Utama</div>
       </div>
+      <a href="login.php" title="Keluar" class="p-1 text-gray-400 hover:text-red-500 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </a>
     </div>
   </aside>
 
